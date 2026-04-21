@@ -58,6 +58,24 @@
         .spotlight-card:hover::after { opacity:1; }
         .spotlight-card>* { position:relative;z-index:2; }
 
+        /* ── Showcase marquee (templates) ── */
+        @keyframes scrollLeft { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+        @keyframes scrollRight { 0%{transform:translateX(-50%)} 100%{transform:translateX(0)} }
+        .tmpl-row-left { display:flex;width:max-content;animation:scrollLeft 40s linear infinite;gap:16px; }
+        .tmpl-row-right { display:flex;width:max-content;animation:scrollRight 40s linear infinite;gap:16px; }
+        .tmpl-row-left:hover,.tmpl-row-right:hover { animation-play-state:paused; }
+        .tmpl-card { width:300px;aspect-ratio:16/10;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.06);flex-shrink:0;transition:transform .4s,border-color .4s; }
+        .tmpl-card:hover { transform:scale(1.03);border-color:rgba(255,107,44,.3); }
+        .tmpl-card img { width:100%;height:100%;object-fit:cover;opacity:.85;transition:opacity .4s; }
+        .tmpl-card:hover img { opacity:1; }
+
+        /* ── Showcase light section ── */
+        .showcase-light { background:#f8f8f8;color:#0a0a0a; }
+        .showcase-light .cursor-dot,.showcase-light .cursor-ring { mix-blend-mode:difference; }
+        .showcase-float { animation:floatY 6s ease-in-out infinite; }
+        .showcase-float-delay { animation:floatY 6s ease-in-out infinite;animation-delay:-3s; }
+        @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+
         /* ── Card lift ── */
         .card-lift { transition:transform .35s,border-color .35s,box-shadow .35s; }
         .card-lift:hover { transform:translateY(-4px);border-color:rgba(255,107,44,.2);box-shadow:0 12px 40px rgba(0,0,0,.4); }
@@ -350,6 +368,142 @@
                         <p class="text-sm text-dark-200 leading-relaxed">Deploy em produção, testes finais e acompanhamento pós-lançamento com suporte dedicado.</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ SHOWCASE (LIGHT) ════════ -->
+    <section class="showcase-light py-28 px-6 overflow-hidden">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 bf">
+                <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Como ficará o seu projeto</p>
+                <h2 class="font-display text-3xl md:text-[2.75rem] text-dark-900 leading-tight mb-4">Cada detalhe pensado<br>para <span class="text-brand">gerar resultado.</span></h2>
+                <p class="text-dark-300 max-w-lg mx-auto">Do wireframe ao produto final — veja como entregamos interfaces que impressionam e convertem.</p>
+            </div>
+
+            <!-- Mockups stack -->
+            <div class="relative max-w-4xl mx-auto bf d1" style="min-height:500px">
+                <!-- Main browser -->
+                <div class="relative z-10 showcase-float">
+                    <div class="rounded-xl border border-dark-100/60 bg-white shadow-2xl shadow-black/10 overflow-hidden">
+                        <div class="flex items-center gap-2 px-4 py-3 border-b border-dark-50 bg-dark-50/50">
+                            <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                            <span class="ml-4 text-xs text-dark-300 bg-white rounded px-3 py-1 border border-dark-100/40 flex-1 max-w-xs">seusite.com.br</span>
+                        </div>
+                        <div class="aspect-[16/9]">
+                            <img src="https://images.unsplash.com/photo-1531297172867-4f40136d81ea?q=80&w=1000&auto=format&fit=crop" alt="Landing Page Preview" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Side panel left -->
+                <div class="absolute -left-8 top-1/4 z-20 w-52 showcase-float-delay hidden lg:block">
+                    <div class="rounded-xl border border-dark-100/40 bg-white shadow-xl shadow-black/8 p-4">
+                        <div class="flex items-center gap-2 mb-3">
+                            <div class="w-6 h-6 rounded bg-brand/10 flex items-center justify-center"><i class="ph ph-palette text-brand text-xs"></i></div>
+                            <span class="text-xs font-semibold text-dark-900">Design System</span>
+                        </div>
+                        <div class="flex gap-2 mb-3">
+                            <div class="w-8 h-8 rounded-lg bg-brand"></div>
+                            <div class="w-8 h-8 rounded-lg bg-dark-900"></div>
+                            <div class="w-8 h-8 rounded-lg bg-dark-200"></div>
+                            <div class="w-8 h-8 rounded-lg bg-dark-50 border border-dark-100"></div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="h-2 bg-dark-100 rounded-full w-full"></div>
+                            <div class="h-2 bg-dark-100 rounded-full w-3/4"></div>
+                            <div class="h-2 bg-brand/20 rounded-full w-1/2"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Side panel right -->
+                <div class="absolute -right-6 top-1/3 z-20 w-56 showcase-float hidden lg:block">
+                    <div class="rounded-xl border border-dark-100/40 bg-white shadow-xl shadow-black/8 p-4">
+                        <div class="flex items-center gap-2 mb-3">
+                            <div class="w-6 h-6 rounded bg-green-50 flex items-center justify-center"><i class="ph ph-chart-line-up text-green-500 text-xs"></i></div>
+                            <span class="text-xs font-semibold text-dark-900">Performance</span>
+                        </div>
+                        <div class="flex items-end gap-1 mb-2" style="height:48px">
+                            <div class="w-4 bg-dark-100 rounded-t" style="height:30%"></div>
+                            <div class="w-4 bg-dark-100 rounded-t" style="height:50%"></div>
+                            <div class="w-4 bg-dark-100 rounded-t" style="height:40%"></div>
+                            <div class="w-4 bg-dark-100 rounded-t" style="height:65%"></div>
+                            <div class="w-4 bg-dark-100 rounded-t" style="height:55%"></div>
+                            <div class="w-4 bg-brand rounded-t" style="height:90%"></div>
+                            <div class="w-4 bg-brand/60 rounded-t" style="height:80%"></div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] text-dark-300">Conversão</span>
+                            <span class="text-xs font-bold text-green-500">+47%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile mockup -->
+                <div class="absolute -right-4 -bottom-6 z-20 w-36 showcase-float-delay hidden md:block">
+                    <div class="rounded-2xl border border-dark-100/40 bg-white shadow-xl shadow-black/8 overflow-hidden">
+                        <div class="flex justify-center py-1.5"><div class="w-12 h-1 bg-dark-100 rounded-full"></div></div>
+                        <div class="aspect-[9/16] max-h-60">
+                            <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=400&auto=format&fit=crop" alt="Mobile" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ TEMPLATES GALLERY ════════ -->
+    <section class="py-28 px-0 overflow-hidden border-t border-white/5">
+        <div class="max-w-6xl mx-auto px-6 mb-14">
+            <div class="text-center bf">
+                <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Inspiração</p>
+                <h2 class="font-display text-3xl md:text-[2.75rem] text-white leading-tight mb-4">Páginas que criamos<br>para nossos clientes.</h2>
+                <p class="text-dark-200 max-w-lg mx-auto">Cada projeto é único. Designs exclusivos, sem templates prontos — feitos sob medida para cada negócio.</p>
+            </div>
+        </div>
+
+        <!-- Row 1 — scroll left -->
+        <div class="overflow-hidden mb-4 bf d1">
+            <div class="tmpl-row-left">
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop" alt="Template 1"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop" alt="Template 2"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1531297172867-4f40136d81ea?q=80&w=600&auto=format&fit=crop" alt="Template 3"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=600&auto=format&fit=crop" alt="Template 4"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop" alt="Template 5"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=600&auto=format&fit=crop" alt="Template 6"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?q=80&w=600&auto=format&fit=crop" alt="Template 7"></div>
+                <!-- duplicate for seamless loop -->
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop" alt="Template 1"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop" alt="Template 2"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1531297172867-4f40136d81ea?q=80&w=600&auto=format&fit=crop" alt="Template 3"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=600&auto=format&fit=crop" alt="Template 4"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop" alt="Template 5"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=600&auto=format&fit=crop" alt="Template 6"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?q=80&w=600&auto=format&fit=crop" alt="Template 7"></div>
+            </div>
+        </div>
+
+        <!-- Row 2 — scroll right -->
+        <div class="overflow-hidden bf d2">
+            <div class="tmpl-row-right">
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?q=80&w=600&auto=format&fit=crop" alt="Template 8"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=600&auto=format&fit=crop" alt="Template 9"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=600&auto=format&fit=crop" alt="Template 10"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=600&auto=format&fit=crop" alt="Template 11"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=600&auto=format&fit=crop" alt="Template 12"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=600&auto=format&fit=crop" alt="Template 13"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600&auto=format&fit=crop" alt="Template 14"></div>
+                <!-- duplicate -->
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?q=80&w=600&auto=format&fit=crop" alt="Template 8"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=600&auto=format&fit=crop" alt="Template 9"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=600&auto=format&fit=crop" alt="Template 10"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=600&auto=format&fit=crop" alt="Template 11"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?q=80&w=600&auto=format&fit=crop" alt="Template 12"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=600&auto=format&fit=crop" alt="Template 13"></div>
+                <div class="tmpl-card"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=600&auto=format&fit=crop" alt="Template 14"></div>
             </div>
         </div>
     </section>
