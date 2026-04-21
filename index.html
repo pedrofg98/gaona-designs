@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaona Designs | Soluções Digitais</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { space: ['Space Grotesk', 'sans-serif'] },
+                    colors: {
+                        brand: '#FF6B2C',
+                        dark: { 50: '#f8f8f8', 100: '#e0e0e0', 200: '#a0a0a0', 300: '#6b6b6b', 400: '#444', 500: '#2a2a2a', 600: '#1a1a1a', 700: '#141414', 800: '#0e0e0e', 900: '#0a0a0a' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background: #0a0a0a; color: #e0e0e0; font-family: 'Space Grotesk', sans-serif; cursor: none; }
+        ::selection { background: #FF6B2C; color: #fff; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #FF6B2C; }
+
+        /* ── Magic UI: Blur Fade Reveal ── */
+        .blur-fade {
+            opacity: 0;
+            filter: blur(8px);
+            transform: translateY(20px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .blur-fade.active {
+            opacity: 1;
+            filter: blur(0px);
+            transform: translateY(0);
+        }
+        .stagger-1 { transition-delay: 100ms; }
+        .stagger-2 { transition-delay: 200ms; }
+        .stagger-3 { transition-delay: 300ms; }
+        .stagger-4 { transition-delay: 400ms; }
+
+        /* ── Custom Cursor ── */
+        .cursor-dot {
+            width: 8px; height: 8px;
+            background: #FF6B2C;
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0;
+            pointer-events: none; z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        .cursor-ring {
+            width: 36px; height: 36px;
+            border: 1.5px solid rgba(255, 107, 44, 0.4);
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0;
+            pointer-events: none; z-index: 9998;
+            transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+        }
+        .cursor-ring.hover {
+            width: 56px; height: 56px;
+            border-color: rgba(255, 107, 44, 0.6);
+            background: rgba(255, 107, 44, 0.06);
+        }
+
+        /* ── Magic UI: Shiny Text ── */
+        @keyframes shiny-text {
+            0%, 90%, 100% { background-position: calc(-100% - 80px) 0; }
+            30%, 60% { background-position: calc(100% + 80px) 0; }
+        }
+        .shiny-text {
+            background: linear-gradient(
+                120deg,
+                rgba(255,255,255,0) 40%,
+                rgba(255, 107, 44, 0.5) 50%,
+                rgba(255,255,255,0) 60%
+            );
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shiny-text 6s infinite;
+            color: white;
+        }
+
+        /* ── Magic UI: Shiny Button ── */
+        @keyframes shiny-btn-sweep {
+            0% { --shiny-x: -100%; }
+            50%, 100% { --shiny-x: 200%; }
+        }
+        .shiny-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .shiny-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                105deg,
+                transparent 20%,
+                rgba(255, 255, 255, 0.25) 50%,
+                transparent 80%
+            );
+            transform: translateX(-100%);
+            animation: shiny-btn-anim 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes shiny-btn-anim {
+            0% { transform: translateX(-100%); }
+            60%, 100% { transform: translateX(350%); }
+        }
+
+        /* ── Card micro-interactions ── */
+        .card-interactive {
+            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+        .card-interactive:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 107, 44, 0.25);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+        .card-interactive .card-icon {
+            transition: transform 0.35s ease, background 0.35s ease;
+        }
+        .card-interactive:hover .card-icon {
+            transform: scale(1.15) rotate(5deg);
+            background: rgba(255, 107, 44, 0.15);
+        }
+
+        /* ── Spotlight Card ── */
+        .spotlight-card {
+            --spotlight-x: 0px;
+            --spotlight-y: 0px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+        }
+        .spotlight-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                350px circle at var(--spotlight-x) var(--spotlight-y),
+                rgba(255, 107, 44, 0.08),
+                transparent 60%
+            );
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .spotlight-card:hover::before {
+            opacity: 1;
+        }
+        .spotlight-card::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: radial-gradient(
+                300px circle at var(--spotlight-x) var(--spotlight-y),
+                rgba(255, 107, 44, 0.45),
+                transparent 60%
+            );
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask-composite: exclude;
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: destination-out;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .spotlight-card:hover::after {
+            opacity: 1;
+        }
+        .spotlight-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ── Button ripple ── */
+        .btn-ripple { position: relative; overflow: hidden; }
+        .btn-ripple .ripple-effect {
+            position: absolute; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple 0.6s ease-out;
+            pointer-events: none;
+        }
+        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+
+        /* ── Button arrow hover ── */
+        .btn-arrow i { transition: transform 0.3s ease; }
+        .btn-arrow:hover i { transform: translateX(4px); }
+
+        /* ── Nav link underline ── */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1.5px;
+            background: #FF6B2C;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* ── Stat counter ── */
+        .counter { font-variant-numeric: tabular-nums; }
+
+        /* ── Pricing card tilt ── */
+        .tilt-card {
+            transition: transform 0.15s ease;
+            transform-style: preserve-3d;
+        }
+
+        /* ── Gradient Bars ── */
+        .gradient-bars {
+            position: absolute; inset: 0; z-index: 0;
+            overflow: hidden; display: flex;
+            width: 100%; height: 100%;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+        .gradient-bar {
+            height: 100%;
+            transform-origin: bottom;
+            transition: transform 0.5s ease-in-out;
+        }
+        @keyframes pulseBar {
+            0% { transform: scaleY(var(--initial-scale)); }
+            100% { transform: scaleY(calc(var(--initial-scale) * 0.7)); }
+        }
+
+        /* ── Badge pulse ── */
+        .pulse-dot { animation: pulseDot 2s ease-in-out infinite; }
+        @keyframes pulseDot {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 44, 0.4); }
+            50% { box-shadow: 0 0 0 6px rgba(255, 107, 44, 0); }
+        }
+
+        /* ── Portfolio overlay ── */
+        .portfolio-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(10,10,10,0.8) 0%, transparent 50%);
+            opacity: 0; transition: opacity 0.4s ease;
+            display: flex; align-items: flex-end; padding: 1.5rem;
+        }
+        .group:hover .portfolio-overlay { opacity: 1; }
+
+        /* ── Carousel Cards ── */
+        .carousel-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.4);
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+        .carousel-card.active {
+            background: rgba(255, 107, 44, 0.06);
+            border-color: rgba(255, 107, 44, 0.25);
+            color: #e0e0e0;
+            opacity: 1;
+            transform: scale(1);
+        }
+        .carousel-card.active .text-brand {
+            opacity: 1;
+        }
+        .carousel-card:not(.active) .text-brand {
+            opacity: 0.3;
+        }
+        .carousel-card:not(.active) .text-white {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+
+    <!-- Nav -->
+    <nav class="fixed top-0 w-full z-50 bg-dark-900/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="#" class="text-lg font-bold text-white tracking-tight">Gaona Designs</a>
+            <div class="hidden md:flex items-center gap-8 text-sm text-dark-200">
+                <a href="#servicos" class="nav-link hover:text-white transition-colors">Serviços</a>
+                <a href="#sobre" class="nav-link hover:text-white transition-colors">Sobre</a>
+                <a href="#portfolio" class="nav-link hover:text-white transition-colors">Portfólio</a>
+                <a href="#planos" class="nav-link hover:text-white transition-colors">Planos</a>
+            </div>
+            <a href="#planos" class="hidden md:inline-flex items-center gap-2 text-sm font-medium text-dark-900 bg-brand px-5 py-2 rounded-full hover:bg-orange-400 transition-colors btn-ripple shiny-btn">
+                Iniciar projeto
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="min-h-screen flex items-center justify-center px-6 pt-16 relative overflow-hidden" style="background-color: #0a0a0a;">
+        <div class="gradient-bars" id="gradient-bars"></div>
+        <div class="max-w-3xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand/20 bg-brand/5 text-brand text-xs font-medium tracking-wide uppercase mb-8 blur-fade">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand pulse-dot"></span>
+                Aceitando novos projetos
+            </div>
+            <h1 class="text-4xl md:text-6xl font-bold leading-tight tracking-tight mb-6 blur-fade stagger-1">
+                <span class="shiny-text">Transformamos ideias em experiências digitais</span>
+            </h1>
+            <p class="text-lg text-dark-200 max-w-xl mx-auto mb-10 leading-relaxed blur-fade stagger-2">
+                Sites, sistemas, landing pages e aplicativos construídos com design de alta qualidade e código escalável.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 blur-fade stagger-3">
+                <a href="#planos" class="inline-flex items-center gap-2 text-sm font-semibold text-dark-900 bg-brand px-7 py-3 rounded-full hover:bg-orange-400 transition-colors btn-ripple btn-arrow shiny-btn">
+                    Ver planos <i class="ph ph-arrow-right"></i>
+                </a>
+                <a href="#portfolio" class="inline-flex items-center gap-2 text-sm font-medium text-dark-200 hover:text-white transition-colors btn-arrow">
+                    Ver projetos <i class="ph ph-arrow-down-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços -->
+    <section id="servicos" class="py-24 px-6 border-t border-white/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="max-w-lg mb-16 blur-fade">
+                <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Serviços</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">Tudo o que você precisa para crescer no digital</h2>
+                <p class="text-dark-200">Entregamos soluções completas — do design ao deploy — com foco em performance e conversão.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 card-interactive spotlight-card blur-fade">
+                    <div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-5 card-icon">
+                        <i class="ph ph-browser text-xl text-brand"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Sites Institucionais</h3>
+                    <p class="text-sm text-dark-200 leading-relaxed">Presença digital profissional com design exclusivo, performance otimizada e SEO técnico integrado desde o primeiro dia.</p>
+                </div>
+                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 card-interactive spotlight-card blur-fade stagger-1">
+                    <div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-5 card-icon">
+                        <i class="ph ph-cpu text-xl text-brand"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Sistemas Web</h3>
+                    <p class="text-sm text-dark-200 leading-relaxed">Dashboards, painéis administrativos e plataformas SaaS com arquitetura escalável, autenticação segura e integrações via API.</p>
+                </div>
+                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 card-interactive spotlight-card blur-fade">
+                    <div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-5 card-icon">
+                        <i class="ph ph-lightning text-xl text-brand"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Landing Pages</h3>
+                    <p class="text-sm text-dark-200 leading-relaxed">Páginas de conversão com copywriting estratégico, carregamento ultrarrápido e estrutura pensada para maximizar resultados de campanhas.</p>
+                </div>
+                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 card-interactive spotlight-card blur-fade stagger-1">
+                    <div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-5 card-icon">
+                        <i class="ph ph-device-mobile text-xl text-brand"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Apps Mobile</h3>
+                    <p class="text-sm text-dark-200 leading-relaxed">Aplicativos nativos e híbridos para iOS e Android, com foco em usabilidade, performance e integração com seus sistemas existentes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre -->
+    <section id="sobre" class="py-24 px-6 border-t border-white/5">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+            <div class="blur-fade">
+                <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Sobre nós</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">Design funcional aliado à engenharia moderna</h2>
+                <p class="text-dark-200 mb-4 leading-relaxed">Cada projeto é construído do zero. Analisamos a arquitetura da informação, o comportamento do usuário e os objetivos do seu negócio antes de escrever uma linha de código.</p>
+                <p class="text-dark-200 leading-relaxed">Nosso foco está na interseção entre estética visual premium e fluidez técnica — UI, UX e performance entregues juntos.</p>
+                <div class="flex flex-wrap gap-6 mt-8">
+                    <div class="flex items-center gap-2 text-sm text-white">
+                        <i class="ph ph-check-circle text-brand text-lg"></i> Código limpo
+                    </div>
+                    <div class="flex items-center gap-2 text-sm text-white">
+                        <i class="ph ph-check-circle text-brand text-lg"></i> Design exclusivo
+                    </div>
+                    <div class="flex items-center gap-2 text-sm text-white">
+                        <i class="ph ph-check-circle text-brand text-lg"></i> Foco em conversão
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 blur-fade stagger-1">
+                <div class="bg-dark-800 border border-white/5 rounded-2xl p-6 text-center card-interactive">
+                    <span class="text-3xl font-bold text-white block mb-1 counter" data-target="150" data-suffix="+">0</span>
+                    <span class="text-xs text-dark-300 uppercase tracking-wider">Projetos entregues</span>
+                </div>
+                <div class="bg-dark-800 border border-white/5 rounded-2xl p-6 text-center card-interactive">
+                    <span class="text-3xl font-bold text-brand block mb-1 counter" data-target="99" data-suffix="%">0</span>
+                    <span class="text-xs text-dark-300 uppercase tracking-wider">Satisfação</span>
+                </div>
+                <div class="bg-dark-800 border border-white/5 rounded-2xl p-6 text-center col-span-2 card-interactive">
+                    <span class="text-3xl font-bold text-white block mb-1 counter" data-target="5" data-suffix=" anos">0</span>
+                    <span class="text-xs text-dark-300 uppercase tracking-wider">De experiência no mercado</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfólio -->
+    <section id="portfolio" class="py-24 px-6 border-t border-white/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 blur-fade">
+                <div>
+                    <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Portfólio</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white leading-tight">Projetos em destaque</h2>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <a href="#" class="group blur-fade block">
+                    <div class="overflow-hidden rounded-xl mb-4 bg-dark-800 aspect-[16/10] relative">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" alt="Dashboard SaaS" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                        <div class="portfolio-overlay">
+                            <span class="text-xs font-medium text-brand uppercase tracking-wider">Ver projeto →</span>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-1 group-hover:text-brand transition-colors">Nexus Finance</h3>
+                    <p class="text-sm text-dark-300">Dashboard SaaS · React</p>
+                </a>
+                <a href="#" class="group blur-fade stagger-1 block">
+                    <div class="overflow-hidden rounded-xl mb-4 bg-dark-800 aspect-[16/10] relative">
+                        <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=800&auto=format&fit=crop" alt="App Mobile" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                        <div class="portfolio-overlay">
+                            <span class="text-xs font-medium text-brand uppercase tracking-wider">Ver projeto →</span>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-1 group-hover:text-brand transition-colors">LogisTracker</h3>
+                    <p class="text-sm text-dark-300">App Mobile · Flutter</p>
+                </a>
+                <a href="#" class="group blur-fade block">
+                    <div class="overflow-hidden rounded-xl mb-4 bg-dark-800 aspect-[16/10] relative">
+                        <img src="https://images.unsplash.com/photo-1531297172867-4f40136d81ea?q=80&w=800&auto=format&fit=crop" alt="Landing Page" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                        <div class="portfolio-overlay">
+                            <span class="text-xs font-medium text-brand uppercase tracking-wider">Ver projeto →</span>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-1 group-hover:text-brand transition-colors">Vortex AI</h3>
+                    <p class="text-sm text-dark-300">Landing Page · Next.js</p>
+                </a>
+                <a href="#" class="group blur-fade stagger-1 block">
+                    <div class="overflow-hidden rounded-xl mb-4 bg-dark-800 aspect-[16/10] relative">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop" alt="Plataforma Web" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                        <div class="portfolio-overlay">
+                            <span class="text-xs font-medium text-brand uppercase tracking-wider">Ver projeto →</span>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-1 group-hover:text-brand transition-colors">Quantum Corp</h3>
+                    <p class="text-sm text-dark-300">Plataforma Web · Next.js</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Depoimentos -->
+    <section class="py-24 px-6 border-t border-white/5 bg-dark-800/30 overflow-hidden">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 blur-fade">
+                <div>
+                    <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Depoimentos</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">O que nossos clientes dizem</h2>
+                    <p class="text-dark-200 mt-3 max-w-md">Relacionamentos construídos com confiança e resultados reais.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="carousel-prev" class="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-dark-200 hover:border-brand hover:text-brand transition-colors">
+                        <i class="ph ph-arrow-left text-lg"></i>
+                    </button>
+                    <button id="carousel-next" class="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-dark-200 hover:border-brand hover:text-brand transition-colors">
+                        <i class="ph ph-arrow-right text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="relative" id="carousel-wrapper">
+                <div class="flex gap-6 transition-transform duration-500 ease-out" id="carousel-track">
+                    <!-- Card 1 -->
+                    <div class="carousel-card min-w-[85%] md:min-w-[45%] lg:min-w-[38%] rounded-2xl p-8 transition-all duration-500" data-index="0">
+                        <div class="flex items-center gap-1 mb-4">
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                        </div>
+                        <p class="text-sm leading-relaxed mb-8">"Nossa taxa de conversão subiu 40% após a reestruturação de UX. Entrega rápida, design impecável e comunicação clara do início ao fim."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center text-xs font-bold text-brand">CM</div>
+                            <div>
+                                <p class="text-sm font-semibold text-white">Carlos Mendes</p>
+                                <p class="text-xs text-dark-300">CEO, TechNova</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="carousel-card min-w-[85%] md:min-w-[45%] lg:min-w-[38%] rounded-2xl p-8 transition-all duration-500" data-index="1">
+                        <div class="flex items-center gap-1 mb-4">
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                        </div>
+                        <p class="text-sm leading-relaxed mb-8">"O painel admin transformou nossa operação logística. Código limpo, performance excelente e suporte impecável após o lançamento do sistema."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center text-xs font-bold text-brand">MS</div>
+                            <div>
+                                <p class="text-sm font-semibold text-white">Mariana Silveira</p>
+                                <p class="text-xs text-dark-300">CTO, LogiFlex</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="carousel-card min-w-[85%] md:min-w-[45%] lg:min-w-[38%] rounded-2xl p-8 transition-all duration-500" data-index="2">
+                        <div class="flex items-center gap-1 mb-4">
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                        </div>
+                        <p class="text-sm leading-relaxed mb-8">"O app superou as expectativas. A arquitetura garantiu zero problemas de escala no lançamento e a integração com nossas APIs foi perfeita."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center text-xs font-bold text-brand">FR</div>
+                            <div>
+                                <p class="text-sm font-semibold text-white">Felipe Ribeiro</p>
+                                <p class="text-xs text-dark-300">Founder, VibeApp</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="carousel-card min-w-[85%] md:min-w-[45%] lg:min-w-[38%] rounded-2xl p-8 transition-all duration-500" data-index="3">
+                        <div class="flex items-center gap-1 mb-4">
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                        </div>
+                        <p class="text-sm leading-relaxed mb-8">"A Gaona entregou nosso e-commerce em tempo recorde. A interface ficou intuitiva e as vendas dobraram no primeiro mês após o lançamento."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center text-xs font-bold text-brand">AL</div>
+                            <div>
+                                <p class="text-sm font-semibold text-white">Ana Luíza Costa</p>
+                                <p class="text-xs text-dark-300">Diretora, ModaViva</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 5 -->
+                    <div class="carousel-card min-w-[85%] md:min-w-[45%] lg:min-w-[38%] rounded-2xl p-8 transition-all duration-500" data-index="4">
+                        <div class="flex items-center gap-1 mb-4">
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                            <i class="ph-fill ph-star text-brand text-sm"></i>
+                        </div>
+                        <p class="text-sm leading-relaxed mb-8">"Profissionalismo do início ao fim. O dashboard que construíram para nós reduziu o tempo de análise de dados em 60%. Recomendo demais."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center text-xs font-bold text-brand">RT</div>
+                            <div>
+                                <p class="text-sm font-semibold text-white">Rafael Torres</p>
+                                <p class="text-xs text-dark-300">COO, DataPulse</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Planos -->
+    <section id="planos" class="py-24 px-6 border-t border-white/5">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 blur-fade">
+                <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Planos</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Escolha o plano ideal para o seu projeto</h2>
+                <p class="text-dark-200 max-w-lg mx-auto">Pacotes pensados para diferentes estágios do seu negócio. Todos incluem design personalizado e código de alta qualidade.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+                <!-- Starter -->
+                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 flex flex-col tilt-card blur-fade stagger-1 relative overflow-hidden">
+                    <div class="mb-8">
+                        <p class="text-sm text-dark-300 uppercase tracking-wider mb-1">Starter</p>
+                        <span class="text-3xl font-bold text-white">R$ 1.497</span>
+                        <p class="text-sm text-dark-300 mt-2">Ideal para validar sua presença online com uma landing page de alta conversão.</p>
+                    </div>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Landing page responsiva</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Design UI/UX personalizado</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>SEO on-page básico</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Entrega em 7 dias</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>1 ciclo de revisão</li>
+                    </ul>
+                    <a href="#" class="w-full text-center text-sm font-semibold text-white border border-white/10 rounded-full py-3 hover:border-brand hover:text-brand transition-colors btn-ripple block">
+                        Começar com Starter
+                    </a>
+                </div>
+
+                <!-- Pro -->
+                <div class="bg-dark-800 border-2 border-brand rounded-2xl p-8 flex flex-col relative tilt-card blur-fade stagger-2">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand text-dark-900 text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider z-10">
+                        Mais popular
+                    </div>
+                    <div class="mb-8 mt-1">
+                        <p class="text-sm text-brand uppercase tracking-wider mb-1">Pro</p>
+                        <span class="text-3xl font-bold text-white">R$ 3.997</span>
+                        <p class="text-sm text-dark-300 mt-2">Para empresas que precisam de um site completo com painel de gestão de conteúdo.</p>
+                    </div>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        <li class="flex items-center gap-3 text-sm text-white font-medium"><i class="ph ph-check text-brand text-base"></i>Tudo do plano Starter</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Site institucional (até 5 páginas)</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Blog dinâmico integrado</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Painel admin (CMS)</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>SEO avançado</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>3 revisões + suporte por 30 dias</li>
+                    </ul>
+                    <a href="#" class="w-full text-center text-sm font-semibold text-dark-900 bg-brand rounded-full py-3 hover:bg-orange-400 transition-colors btn-ripple shiny-btn block">
+                        Começar com Pro
+                    </a>
+                </div>
+
+                <!-- Max -->
+                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 flex flex-col tilt-card blur-fade stagger-3 relative overflow-hidden">
+                    <div class="mb-8">
+                        <p class="text-sm text-dark-300 uppercase tracking-wider mb-1">Max</p>
+                        <span class="text-3xl font-bold text-white">R$ 7.997</span>
+                        <p class="text-sm text-dark-300 mt-2">Solução completa com sistema web customizado, app mobile e infraestrutura escalável.</p>
+                    </div>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        <li class="flex items-center gap-3 text-sm text-white font-medium"><i class="ph ph-check text-brand text-base"></i>Tudo do plano Pro</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Sistema web/app customizado</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Dashboard com analytics</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Integrações com múltiplas APIs</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>App mobile (iOS e Android)</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Revisões ilimitadas + suporte por 90 dias</li>
+                    </ul>
+                    <a href="#" class="w-full text-center text-sm font-semibold text-white border border-white/10 rounded-full py-3 hover:border-brand hover:text-brand transition-colors btn-ripple block">
+                        Solicitar orçamento
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24 px-6 border-t border-white/5">
+        <div class="max-w-3xl mx-auto text-center blur-fade">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Pronto para começar seu projeto?</h2>
+            <p class="text-dark-200 mb-8 max-w-lg mx-auto">Entre em contato e receba um orçamento personalizado em até 24 horas. Sem compromisso.</p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="mailto:contato@gaonadesigns.com" class="inline-flex items-center gap-2 text-sm font-semibold text-dark-900 bg-brand px-7 py-3 rounded-full hover:bg-orange-400 transition-colors btn-ripple btn-arrow shiny-btn">
+                    <i class="ph ph-envelope-simple"></i> Enviar e-mail
+                </a>
+                <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-dark-200 border border-white/10 px-7 py-3 rounded-full hover:border-brand hover:text-brand transition-colors btn-ripple btn-arrow">
+                    <i class="ph ph-whatsapp-logo"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-12 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-6">
+                <span class="text-sm font-bold text-white">Gaona Designs</span>
+                <div class="flex gap-4">
+                    <a href="#" class="text-dark-300 hover:text-brand transition-colors"><i class="ph-fill ph-instagram-logo text-lg"></i></a>
+                    <a href="#" class="text-dark-300 hover:text-brand transition-colors"><i class="ph-fill ph-linkedin-logo text-lg"></i></a>
+                    <a href="#" class="text-dark-300 hover:text-brand transition-colors"><i class="ph-fill ph-behance-logo text-lg"></i></a>
+                </div>
+            </div>
+            <p class="text-xs text-dark-400">&copy; 2024 Gaona Designs. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // ── Blur Fade Reveal (Magic UI) ──
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.blur-fade').forEach(el => observer.observe(el));
+
+        // ── Custom Cursor ──
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX; mouseY = e.clientY;
+            dot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
+        });
+
+        function animateRing() {
+            ringX += (mouseX - ringX) * 0.15;
+            ringY += (mouseY - ringY) * 0.15;
+            ring.style.transform = `translate(${ringX - 18}px, ${ringY - 18}px)`;
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        const interactives = document.querySelectorAll('a, button, .card-interactive, .tilt-card, .testimonial-card');
+        interactives.forEach(el => {
+            el.addEventListener('mouseenter', () => ring.classList.add('hover'));
+            el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+        });
+
+        document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
+        document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '1'; });
+
+        // ── Button Ripple ──
+        document.querySelectorAll('.btn-ripple').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple-effect';
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+                ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+                this.appendChild(ripple);
+                ripple.addEventListener('animationend', () => ripple.remove());
+            });
+        });
+
+        // ── Animated Counters ──
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                const target = parseInt(el.dataset.target);
+                const suffix = el.dataset.suffix || '';
+                let current = 0;
+                const step = Math.max(1, Math.floor(target / 40));
+                const interval = setInterval(() => {
+                    current += step;
+                    if (current >= target) { current = target; clearInterval(interval); }
+                    el.textContent = current + suffix;
+                }, 30);
+                counterObserver.unobserve(el);
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+        // ── Spotlight Cards ──
+        document.querySelectorAll('.spotlight-card').forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                this.style.setProperty('--spotlight-x', (e.clientX - rect.left) + 'px');
+                this.style.setProperty('--spotlight-y', (e.clientY - rect.top) + 'px');
+            });
+        });
+
+        // ── Pricing Card Tilt ──
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -4;
+                const rotateY = ((x - centerX) / centerX) * 4;
+                this.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+            });
+        });
+
+        // ── Testimonial Carousel ──
+        const track = document.getElementById('carousel-track');
+        const cards = document.querySelectorAll('.carousel-card');
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
+        let currentSlide = 0;
+
+        function updateCarousel() {
+            cards.forEach((card, i) => {
+                card.classList.toggle('active', i === currentSlide);
+            });
+            // Calculate offset: move track so active card is at start
+            const activeCard = cards[currentSlide];
+            if (activeCard && track) {
+                const trackRect = track.getBoundingClientRect();
+                const cardRect = activeCard.getBoundingClientRect();
+                const offset = activeCard.offsetLeft;
+                track.style.transform = `translateX(-${offset}px)`;
+            }
+        }
+
+        if (prevBtn && nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide + 1) % cards.length;
+                updateCarousel();
+            });
+            prevBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + cards.length) % cards.length;
+                updateCarousel();
+            });
+            updateCarousel();
+        }
+
+        // ── Gradient Bars Background ──
+        const barsContainer = document.getElementById('gradient-bars');
+        const NUM_BARS = 9;
+        const GRADIENT_FROM = 'rgba(255, 107, 44, 0.35)';
+        const GRADIENT_TO = 'transparent';
+        const ANIMATION_DURATION = 2;
+
+        function calculateBarHeight(index, total) {
+            const position = index / (total - 1);
+            const center = 0.5;
+            const distanceFromCenter = Math.abs(position - center);
+            return 30 + 70 * Math.pow(distanceFromCenter * 2, 1.2);
+        }
+
+        for (let i = 0; i < NUM_BARS; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'gradient-bar';
+            const height = calculateBarHeight(i, NUM_BARS);
+            bar.style.cssText = `
+                flex: 1 0 calc(100% / ${NUM_BARS});
+                max-width: calc(100% / ${NUM_BARS});
+                background: linear-gradient(to top, ${GRADIENT_FROM}, ${GRADIENT_TO});
+                transform: scaleY(${height / 100});
+                animation: pulseBar ${ANIMATION_DURATION}s ease-in-out infinite alternate;
+                animation-delay: ${i * 0.1}s;
+                --initial-scale: ${height / 100};
+                outline: 1px solid rgba(0, 0, 0, 0);
+                box-sizing: border-box;
+            `;
+            barsContainer.appendChild(bar);
+        }
+    });
+    </script>
+</body>
+</html>
