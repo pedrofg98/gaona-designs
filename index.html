@@ -4,858 +4,686 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gaona Designs | Soluções Digitais</title>
+    <meta name="description" content="Sites, sistemas, landing pages e aplicativos com design premium e código escalável.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { space: ['Space Grotesk', 'sans-serif'] },
+                    fontFamily: {
+                        body: ['Space Grotesk', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                    },
                     colors: {
                         brand: '#FF6B2C',
-                        dark: { 50: '#f8f8f8', 100: '#e0e0e0', 200: '#a0a0a0', 300: '#6b6b6b', 400: '#444', 500: '#2a2a2a', 600: '#1a1a1a', 700: '#141414', 800: '#0e0e0e', 900: '#0a0a0a' }
+                        brandDark: '#CC5523',
+                        dark: { 50:'#f8f8f8',100:'#e0e0e0',200:'#a0a0a0',300:'#6b6b6b',400:'#444',500:'#2a2a2a',600:'#1a1a1a',700:'#141414',800:'#0e0e0e',900:'#0a0a0a' }
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background: #0a0a0a; color: #e0e0e0; font-family: 'Space Grotesk', sans-serif; cursor: none; }
-        ::selection { background: #FF6B2C; color: #fff; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0a0a; }
-        ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #FF6B2C; }
-
-        /* ── Magic UI: Blur Fade Reveal ── */
-        .blur-fade {
-            opacity: 0;
-            filter: blur(8px);
-            transform: translateY(20px);
-            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-                        filter 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .blur-fade.active {
-            opacity: 1;
-            filter: blur(0px);
-            transform: translateY(0);
-        }
-        .stagger-1 { transition-delay: 100ms; }
-        .stagger-2 { transition-delay: 200ms; }
-        .stagger-3 { transition-delay: 300ms; }
-        .stagger-4 { transition-delay: 400ms; }
+        body { background:#0a0a0a; color:#e0e0e0; font-family:'Space Grotesk',sans-serif; cursor:none; }
+        ::selection { background:#FF6B2C; color:#fff; }
+        ::-webkit-scrollbar { width:5px; }
+        ::-webkit-scrollbar-track { background:#0a0a0a; }
+        ::-webkit-scrollbar-thumb { background:#1a1a1a; border-radius:3px; }
+        ::-webkit-scrollbar-thumb:hover { background:#FF6B2C; }
 
         /* ── Custom Cursor ── */
-        .cursor-dot {
-            width: 8px; height: 8px;
-            background: #FF6B2C;
-            border-radius: 50%;
-            position: fixed; top: 0; left: 0;
-            pointer-events: none; z-index: 9999;
-            transition: transform 0.1s ease;
-        }
-        .cursor-ring {
-            width: 36px; height: 36px;
-            border: 1.5px solid rgba(255, 107, 44, 0.4);
-            border-radius: 50%;
-            position: fixed; top: 0; left: 0;
-            pointer-events: none; z-index: 9998;
-            transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background 0.3s ease;
-        }
-        .cursor-ring.hover {
-            width: 56px; height: 56px;
-            border-color: rgba(255, 107, 44, 0.6);
-            background: rgba(255, 107, 44, 0.06);
-        }
+        .cursor-dot { width:8px;height:8px;background:#FF6B2C;border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transition:transform .1s ease; }
+        .cursor-ring { width:36px;height:36px;border:1.5px solid rgba(255,107,44,.35);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:width .3s,height .3s,border-color .3s,background .3s; }
+        .cursor-ring.hover { width:56px;height:56px;border-color:rgba(255,107,44,.6);background:rgba(255,107,44,.06); }
 
-        /* ── Magic UI: Shiny Text ── */
-        @keyframes shiny-text {
-            0%, 90%, 100% { background-position: calc(-100% - 80px) 0; }
-            30%, 60% { background-position: calc(100% + 80px) 0; }
-        }
-        .shiny-text {
-            background: linear-gradient(
-                120deg,
-                rgba(255,255,255,0) 40%,
-                rgba(255, 107, 44, 0.5) 50%,
-                rgba(255,255,255,0) 60%
-            );
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: shiny-text 6s infinite;
-            color: white;
-        }
+        /* ── Blur Fade ── */
+        .bf { opacity:0; filter:blur(8px); transform:translateY(24px); transition:opacity .7s cubic-bezier(.16,1,.3,1), filter .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+        .bf.active { opacity:1; filter:blur(0); transform:translateY(0); }
+        .d1{transition-delay:80ms} .d2{transition-delay:160ms} .d3{transition-delay:240ms} .d4{transition-delay:320ms} .d5{transition-delay:400ms}
 
-        /* ── Magic UI: Shiny Button ── */
-        @keyframes shiny-btn-sweep {
-            0% { --shiny-x: -100%; }
-            50%, 100% { --shiny-x: 200%; }
-        }
-        .shiny-btn {
-            position: relative;
-            overflow: hidden;
-        }
-        .shiny-btn::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(
-                105deg,
-                transparent 20%,
-                rgba(255, 255, 255, 0.25) 50%,
-                transparent 80%
-            );
-            transform: translateX(-100%);
-            animation: shiny-btn-anim 3s ease-in-out infinite;
-            pointer-events: none;
-        }
-        @keyframes shiny-btn-anim {
-            0% { transform: translateX(-100%); }
-            60%, 100% { transform: translateX(350%); }
-        }
-
-        /* ── Card micro-interactions ── */
-        .card-interactive {
-            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-        }
-        .card-interactive:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255, 107, 44, 0.25);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-        }
-        .card-interactive .card-icon {
-            transition: transform 0.35s ease, background 0.35s ease;
-        }
-        .card-interactive:hover .card-icon {
-            transform: scale(1.15) rotate(5deg);
-            background: rgba(255, 107, 44, 0.15);
-        }
+        /* ── Line Reveal (clip-path) ── */
+        .line-reveal { clip-path:inset(0 100% 0 0); transition:clip-path .8s cubic-bezier(.16,1,.3,1); }
+        .line-reveal.active { clip-path:inset(0 0% 0 0); }
 
         /* ── Spotlight Card ── */
-        .spotlight-card {
-            --spotlight-x: 0px;
-            --spotlight-y: 0px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 1rem;
-        }
-        .spotlight-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(
-                350px circle at var(--spotlight-x) var(--spotlight-y),
-                rgba(255, 107, 44, 0.08),
-                transparent 60%
-            );
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .spotlight-card:hover::before {
-            opacity: 1;
-        }
-        .spotlight-card::after {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: inherit;
-            padding: 1px;
-            background: radial-gradient(
-                300px circle at var(--spotlight-x) var(--spotlight-y),
-                rgba(255, 107, 44, 0.45),
-                transparent 60%
-            );
-            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            mask-composite: exclude;
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: destination-out;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .spotlight-card:hover::after {
-            opacity: 1;
-        }
-        .spotlight-card > * {
-            position: relative;
-            z-index: 2;
-        }
+        .spotlight-card { --sx:0px;--sy:0px; position:relative; overflow:hidden; border-radius:1rem; }
+        .spotlight-card::before { content:'';position:absolute;inset:0;background:radial-gradient(350px circle at var(--sx) var(--sy),rgba(255,107,44,.07),transparent 60%);opacity:0;transition:opacity .4s;pointer-events:none;z-index:0; }
+        .spotlight-card:hover::before { opacity:1; }
+        .spotlight-card::after { content:'';position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:radial-gradient(280px circle at var(--sx) var(--sy),rgba(255,107,44,.4),transparent 60%);mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:destination-out;opacity:0;transition:opacity .4s;pointer-events:none;z-index:1; }
+        .spotlight-card:hover::after { opacity:1; }
+        .spotlight-card>* { position:relative;z-index:2; }
 
-        /* ── Button ripple ── */
-        .btn-ripple { position: relative; overflow: hidden; }
-        .btn-ripple .ripple-effect {
-            position: absolute; border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(0);
-            animation: ripple 0.6s ease-out;
-            pointer-events: none;
-        }
-        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+        /* ── Card lift ── */
+        .card-lift { transition:transform .35s,border-color .35s,box-shadow .35s; }
+        .card-lift:hover { transform:translateY(-4px);border-color:rgba(255,107,44,.2);box-shadow:0 12px 40px rgba(0,0,0,.4); }
 
-        /* ── Button arrow hover ── */
-        .btn-arrow i { transition: transform 0.3s ease; }
-        .btn-arrow:hover i { transform: translateX(4px); }
+        /* ── Shiny sweep on buttons ── */
+        .shiny-btn { position:relative;overflow:hidden; }
+        .shiny-btn::after { content:'';position:absolute;top:0;left:0;width:50%;height:100%;background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,.2) 50%,transparent 80%);transform:translateX(-100%);animation:sweep 3.5s ease-in-out infinite;pointer-events:none; }
+        @keyframes sweep { 0%{transform:translateX(-100%)} 60%,100%{transform:translateX(350%)} }
 
-        /* ── Nav link underline ── */
-        .nav-link { position: relative; }
-        .nav-link::after {
-            content: ''; position: absolute;
-            bottom: -4px; left: 0;
-            width: 0; height: 1.5px;
-            background: #FF6B2C;
-            transition: width 0.3s ease;
-        }
-        .nav-link:hover::after { width: 100%; }
+        /* ── Shiny Text ── */
+        @keyframes shinyText { 0%,90%,100%{background-position:calc(-100% - 80px) 0} 30%,60%{background-position:calc(100% + 80px) 0} }
+        .shiny-text { background:linear-gradient(120deg,rgba(255,255,255,0) 40%,rgba(255,107,44,.45) 50%,rgba(255,255,255,0) 60%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;animation:shinyText 5s infinite;color:white; }
 
-        /* ── Stat counter ── */
-        .counter { font-variant-numeric: tabular-nums; }
+        /* ── Ripple ── */
+        .btn-ripple { position:relative;overflow:hidden; }
+        .btn-ripple .rpl { position:absolute;border-radius:50%;background:rgba(255,255,255,.3);transform:scale(0);animation:rplAnim .6s ease-out;pointer-events:none; }
+        @keyframes rplAnim { to{transform:scale(4);opacity:0} }
 
-        /* ── Pricing card tilt ── */
-        .tilt-card {
-            transition: transform 0.15s ease;
-            transform-style: preserve-3d;
-        }
+        /* ── Nav underline ── */
+        .nav-link { position:relative; }
+        .nav-link::after { content:'';position:absolute;bottom:-4px;left:0;width:0;height:1.5px;background:#FF6B2C;transition:width .3s; }
+        .nav-link:hover::after { width:100%; }
+
+        /* ── Marquee ── */
+        @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+        .marquee-track { display:flex;width:max-content;animation:marquee 30s linear infinite; }
+        .marquee-track:hover { animation-play-state:paused; }
 
         /* ── Gradient Bars ── */
-        .gradient-bars {
-            position: absolute; inset: 0; z-index: 0;
-            overflow: hidden; display: flex;
-            width: 100%; height: 100%;
-            transform: translateZ(0);
-            backface-visibility: hidden;
-        }
-        .gradient-bar {
-            height: 100%;
-            transform-origin: bottom;
-            transition: transform 0.5s ease-in-out;
-        }
-        @keyframes pulseBar {
-            0% { transform: scaleY(var(--initial-scale)); }
-            100% { transform: scaleY(calc(var(--initial-scale) * 0.7)); }
-        }
+        .gradient-bars { position:absolute;inset:0;z-index:0;overflow:hidden;display:flex;width:100%;height:100%;transform:translateZ(0); }
+        .gradient-bar { height:100%;transform-origin:bottom; }
+        @keyframes pulseBar { 0%{transform:scaleY(var(--is))} 100%{transform:scaleY(calc(var(--is)*.7))} }
 
         /* ── Badge pulse ── */
-        .pulse-dot { animation: pulseDot 2s ease-in-out infinite; }
-        @keyframes pulseDot {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 44, 0.4); }
-            50% { box-shadow: 0 0 0 6px rgba(255, 107, 44, 0); }
-        }
+        .pulse-dot { animation:pd 2s ease-in-out infinite; }
+        @keyframes pd { 0%,100%{box-shadow:0 0 0 0 rgba(255,107,44,.4)} 50%{box-shadow:0 0 0 6px rgba(255,107,44,0)} }
 
         /* ── Portfolio overlay ── */
-        .portfolio-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(10,10,10,0.8) 0%, transparent 50%);
-            opacity: 0; transition: opacity 0.4s ease;
-            display: flex; align-items: flex-end; padding: 1.5rem;
-        }
-        .group:hover .portfolio-overlay { opacity: 1; }
+        .portfolio-overlay { position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.85) 0%,transparent 50%);opacity:0;transition:opacity .4s;display:flex;align-items:flex-end;padding:1.5rem; }
+        .group:hover .portfolio-overlay { opacity:1; }
 
-        /* ── Carousel Cards ── */
-        .carousel-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.4);
-            opacity: 0.5;
-            transform: scale(0.95);
-        }
-        .carousel-card.active {
-            background: rgba(255, 107, 44, 0.06);
-            border-color: rgba(255, 107, 44, 0.25);
-            color: #e0e0e0;
-            opacity: 1;
-            transform: scale(1);
-        }
-        .carousel-card.active .text-brand {
-            opacity: 1;
-        }
-        .carousel-card:not(.active) .text-brand {
-            opacity: 0.3;
-        }
-        .carousel-card:not(.active) .text-white {
-            color: rgba(255, 255, 255, 0.5);
-        }
+        /* ── Carousel ── */
+        .carousel-card { background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.4);opacity:.5;transform:scale(.95);transition:all .5s; }
+        .carousel-card.active { background:rgba(255,107,44,.05);border-color:rgba(255,107,44,.25);color:#e0e0e0;opacity:1;transform:scale(1); }
+        .carousel-card:not(.active) .text-brand { opacity:.3; }
+        .carousel-card:not(.active) .text-white { color:rgba(255,255,255,.5); }
 
+        /* ── FAQ Accordion ── */
+        .faq-answer { max-height:0;overflow:hidden;transition:max-height .4s ease,padding .4s ease;padding:0 0; }
+        .faq-item.open .faq-answer { max-height:200px;padding:0 0 1rem 0; }
+        .faq-item.open .faq-chevron { transform:rotate(180deg); }
+        .faq-chevron { transition:transform .3s; }
+
+        /* ── Tilt ── */
+        .tilt-card { transition:transform .15s;transform-style:preserve-3d; }
+
+        /* ── Mockup browser frame ── */
+        .browser-frame { border-radius:12px;border:1px solid rgba(255,255,255,.08);background:#141414;overflow:hidden; }
+        .browser-dots { display:flex;gap:6px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05); }
+        .browser-dots span { width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.1); }
+        .browser-dots span:first-child { background:#ff5f57; }
+        .browser-dots span:nth-child(2) { background:#ffbd2e; }
+        .browser-dots span:nth-child(3) { background:#28c840; }
+
+        /* ── Counter ── */
+        .counter { font-variant-numeric:tabular-nums; }
+
+        /* ── Process line ── */
+        .process-line { position:relative; }
+        .process-line::before { content:'';position:absolute;left:19px;top:40px;bottom:0;width:1px;background:linear-gradient(to bottom,rgba(255,107,44,.3),transparent);z-index:0; }
     </style>
 </head>
-<body class="antialiased">
+<body class="font-body antialiased">
 
-    <!-- Custom Cursor -->
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-ring" id="cursor-ring"></div>
 
     <!-- Nav -->
     <nav class="fixed top-0 w-full z-50 bg-dark-900/90 backdrop-blur-md border-b border-white/5">
         <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="#" class="text-lg font-bold text-white tracking-tight">Gaona Designs</a>
+            <a href="#" class="text-lg font-bold text-white tracking-tight font-display">gaona<span class="text-brand">.</span></a>
             <div class="hidden md:flex items-center gap-8 text-sm text-dark-200">
                 <a href="#servicos" class="nav-link hover:text-white transition-colors">Serviços</a>
-                <a href="#sobre" class="nav-link hover:text-white transition-colors">Sobre</a>
-                <a href="#portfolio" class="nav-link hover:text-white transition-colors">Portfólio</a>
+                <a href="#processo" class="nav-link hover:text-white transition-colors">Processo</a>
+                <a href="#portfolio" class="nav-link hover:text-white transition-colors">Trabalhos</a>
                 <a href="#planos" class="nav-link hover:text-white transition-colors">Planos</a>
             </div>
             <a href="#planos" class="hidden md:inline-flex items-center gap-2 text-sm font-medium text-dark-900 bg-brand px-5 py-2 rounded-full hover:bg-orange-400 transition-colors btn-ripple shiny-btn">
-                Iniciar projeto
+                Começar projeto
             </a>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <section class="min-h-screen flex items-center justify-center px-6 pt-16 relative overflow-hidden" style="background-color: #0a0a0a;">
+    <!-- ════════ HERO ════════ -->
+    <section class="min-h-screen flex items-center px-6 pt-20 pb-16 relative overflow-hidden" style="background:#0a0a0a">
         <div class="gradient-bars" id="gradient-bars"></div>
-        <div class="max-w-3xl mx-auto text-center relative z-10">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand/20 bg-brand/5 text-brand text-xs font-medium tracking-wide uppercase mb-8 blur-fade">
-                <span class="w-1.5 h-1.5 rounded-full bg-brand pulse-dot"></span>
-                Aceitando novos projetos
+        <div class="max-w-6xl mx-auto w-full grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
+            <!-- Left: Copy -->
+            <div>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand/20 bg-brand/5 text-brand text-xs font-medium tracking-wide uppercase mb-6 bf">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand pulse-dot"></span>
+                    Aceitando novos projetos
+                </div>
+                <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl text-white leading-[1.05] tracking-tight mb-6 bf d1">
+                    Criamos experiências<br>
+                    <span class="shiny-text">que convertem.</span>
+                </h1>
+                <p class="text-dark-200 text-lg leading-relaxed max-w-md mb-8 bf d2">
+                    Do conceito ao deploy — sites, sistemas e apps construídos para gerar resultado real para o seu negócio.
+                </p>
+                <div class="flex flex-wrap items-center gap-4 bf d3">
+                    <a href="#planos" class="inline-flex items-center gap-2 text-sm font-semibold text-dark-900 bg-brand px-7 py-3.5 rounded-full hover:bg-orange-400 transition-colors btn-ripple shiny-btn">
+                        Ver planos <i class="ph ph-arrow-right"></i>
+                    </a>
+                    <a href="#portfolio" class="inline-flex items-center gap-2 text-sm font-medium text-dark-200 border border-white/10 px-7 py-3.5 rounded-full hover:border-brand/40 hover:text-white transition-colors">
+                        Nossos trabalhos
+                    </a>
+                </div>
+                <div class="flex items-center gap-4 mt-10 bf d4">
+                    <div class="flex -space-x-2">
+                        <div class="w-8 h-8 rounded-full bg-dark-600 border-2 border-dark-900 flex items-center justify-center text-[10px] font-bold text-white">CM</div>
+                        <div class="w-8 h-8 rounded-full bg-dark-600 border-2 border-dark-900 flex items-center justify-center text-[10px] font-bold text-white">MS</div>
+                        <div class="w-8 h-8 rounded-full bg-dark-600 border-2 border-dark-900 flex items-center justify-center text-[10px] font-bold text-white">FR</div>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-0.5">
+                            <i class="ph-fill ph-star text-brand text-xs"></i>
+                            <i class="ph-fill ph-star text-brand text-xs"></i>
+                            <i class="ph-fill ph-star text-brand text-xs"></i>
+                            <i class="ph-fill ph-star text-brand text-xs"></i>
+                            <i class="ph-fill ph-star text-brand text-xs"></i>
+                        </div>
+                        <p class="text-xs text-dark-300 mt-0.5">150+ projetos entregues</p>
+                    </div>
+                </div>
             </div>
-            <h1 class="text-4xl md:text-6xl font-bold leading-tight tracking-tight mb-6 blur-fade stagger-1">
-                <span class="shiny-text">Transformamos ideias em experiências digitais</span>
-            </h1>
-            <p class="text-lg text-dark-200 max-w-xl mx-auto mb-10 leading-relaxed blur-fade stagger-2">
-                Sites, sistemas, landing pages e aplicativos construídos com design de alta qualidade e código escalável.
-            </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 blur-fade stagger-3">
-                <a href="#planos" class="inline-flex items-center gap-2 text-sm font-semibold text-dark-900 bg-brand px-7 py-3 rounded-full hover:bg-orange-400 transition-colors btn-ripple btn-arrow shiny-btn">
-                    Ver planos <i class="ph ph-arrow-right"></i>
-                </a>
-                <a href="#portfolio" class="inline-flex items-center gap-2 text-sm font-medium text-dark-200 hover:text-white transition-colors btn-arrow">
-                    Ver projetos <i class="ph ph-arrow-down-right"></i>
-                </a>
+            <!-- Right: Browser Mockup -->
+            <div class="bf d2 hidden lg:block">
+                <div class="browser-frame shadow-2xl shadow-black/50">
+                    <div class="browser-dots"><span></span><span></span><span></span><span class="ml-auto w-auto h-auto bg-transparent text-dark-400 text-xs">gaonadesigns.com</span></div>
+                    <div class="aspect-[16/10] relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" alt="Dashboard" class="w-full h-full object-cover opacity-80">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-800/60 to-transparent"></div>
+                    </div>
+                </div>
+                <div class="browser-frame shadow-xl shadow-black/50 w-44 absolute -bottom-4 -left-6 rotate-[-3deg]">
+                    <div class="browser-dots py-2 px-3 gap-4"><span class="w-2 h-2"></span><span class="w-2 h-2"></span><span class="w-2 h-2"></span></div>
+                    <div class="aspect-[9/16] max-h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=400&auto=format&fit=crop" alt="Mobile App" class="w-full h-full object-cover opacity-80">
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Serviços -->
-    <section id="servicos" class="py-24 px-6 border-t border-white/5">
+    <!-- ════════ TECH MARQUEE ════════ -->
+    <section class="border-y border-white/5 py-5 overflow-hidden bg-dark-900">
+        <div class="marquee-track">
+            <div class="flex items-center gap-12 px-6 text-dark-300 text-sm font-medium whitespace-nowrap">
+                <span class="flex items-center gap-2"><i class="ph ph-atom text-brand text-lg"></i> React</span>
+                <span class="flex items-center gap-2"><i class="ph ph-file-ts text-brand text-lg"></i> TypeScript</span>
+                <span class="flex items-center gap-2"><i class="ph ph-wind text-brand text-lg"></i> Tailwind CSS</span>
+                <span class="flex items-center gap-2"><i class="ph ph-arrow-square-out text-brand text-lg"></i> Next.js</span>
+                <span class="flex items-center gap-2"><i class="ph ph-database text-brand text-lg"></i> Node.js</span>
+                <span class="flex items-center gap-2"><i class="ph ph-figma-logo text-brand text-lg"></i> Figma</span>
+                <span class="flex items-center gap-2"><i class="ph ph-device-mobile text-brand text-lg"></i> Flutter</span>
+                <span class="flex items-center gap-2"><i class="ph ph-cloud text-brand text-lg"></i> AWS</span>
+                <span class="flex items-center gap-2"><i class="ph ph-git-branch text-brand text-lg"></i> Git</span>
+                <span class="flex items-center gap-2"><i class="ph ph-flame text-brand text-lg"></i> Firebase</span>
+                <span class="text-dark-500">—</span>
+            </div>
+            <div class="flex items-center gap-12 px-6 text-dark-300 text-sm font-medium whitespace-nowrap" aria-hidden="true">
+                <span class="flex items-center gap-2"><i class="ph ph-atom text-brand text-lg"></i> React</span>
+                <span class="flex items-center gap-2"><i class="ph ph-file-ts text-brand text-lg"></i> TypeScript</span>
+                <span class="flex items-center gap-2"><i class="ph ph-wind text-brand text-lg"></i> Tailwind CSS</span>
+                <span class="flex items-center gap-2"><i class="ph ph-arrow-square-out text-brand text-lg"></i> Next.js</span>
+                <span class="flex items-center gap-2"><i class="ph ph-database text-brand text-lg"></i> Node.js</span>
+                <span class="flex items-center gap-2"><i class="ph ph-figma-logo text-brand text-lg"></i> Figma</span>
+                <span class="flex items-center gap-2"><i class="ph ph-device-mobile text-brand text-lg"></i> Flutter</span>
+                <span class="flex items-center gap-2"><i class="ph ph-cloud text-brand text-lg"></i> AWS</span>
+                <span class="flex items-center gap-2"><i class="ph ph-git-branch text-brand text-lg"></i> Git</span>
+                <span class="flex items-center gap-2"><i class="ph ph-flame text-brand text-lg"></i> Firebase</span>
+                <span class="text-dark-500">—</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ SERVICES — BENTO GRID ════════ -->
+    <section id="servicos" class="py-28 px-6">
         <div class="max-w-6xl mx-auto">
-            <div class="max-w-lg mb-16 blur-fade">
-                <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Serviços</p>
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">Tudo o que você precisa para crescer no digital</h2>
-                <p class="text-dark-200">Entregamos soluções completas — do design ao deploy — com foco em performance e conversão.</p>
+            <div class="max-w-lg mb-14 bf">
+                <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">O que fazemos</p>
+                <h2 class="font-display text-3xl md:text-[2.75rem] text-white leading-tight mb-4">Soluções sob medida<br>para cada desafio.</h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 card-interactive spotlight-card blur-fade">
-                    <div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-5 card-icon">
-                        <i class="ph ph-browser text-xl text-brand"></i>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[220px]">
+                <!-- Big card -->
+                <div class="md:col-span-2 bg-dark-800 border border-white/5 rounded-2xl p-8 card-lift spotlight-card bf flex flex-col justify-between">
+                    <div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center"><i class="ph ph-cpu text-xl text-brand"></i></div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Sistemas Web & SaaS</h3>
+                        <p class="text-sm text-dark-200 leading-relaxed max-w-md">Dashboards, painéis admin e plataformas complexas com autenticação, APIs e arquitetura pronta pra escalar.</p>
                     </div>
-                    <h3 class="text-lg font-semibold text-white mb-2">Sites Institucionais</h3>
-                    <p class="text-sm text-dark-200 leading-relaxed">Presença digital profissional com design exclusivo, performance otimizada e SEO técnico integrado desde o primeiro dia.</p>
                 </div>
-                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 card-interactive spotlight-card blur-fade stagger-1">
-                    <div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-5 card-icon">
-                        <i class="ph ph-cpu text-xl text-brand"></i>
+                <!-- Small card -->
+                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 card-lift spotlight-card bf d1 flex flex-col justify-between">
+                    <div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center"><i class="ph ph-lightning text-xl text-brand"></i></div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-1">Landing Pages</h3>
+                        <p class="text-sm text-dark-200 leading-relaxed">Alta conversão, load rápido e copywriting estratégico.</p>
                     </div>
-                    <h3 class="text-lg font-semibold text-white mb-2">Sistemas Web</h3>
-                    <p class="text-sm text-dark-200 leading-relaxed">Dashboards, painéis administrativos e plataformas SaaS com arquitetura escalável, autenticação segura e integrações via API.</p>
                 </div>
-                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 card-interactive spotlight-card blur-fade">
-                    <div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-5 card-icon">
-                        <i class="ph ph-lightning text-xl text-brand"></i>
+                <!-- Small card -->
+                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 card-lift spotlight-card bf flex flex-col justify-between">
+                    <div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center"><i class="ph ph-browser text-xl text-brand"></i></div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-1">Sites Institucionais</h3>
+                        <p class="text-sm text-dark-200 leading-relaxed">Presença digital profissional com SEO técnico integrado.</p>
                     </div>
-                    <h3 class="text-lg font-semibold text-white mb-2">Landing Pages</h3>
-                    <p class="text-sm text-dark-200 leading-relaxed">Páginas de conversão com copywriting estratégico, carregamento ultrarrápido e estrutura pensada para maximizar resultados de campanhas.</p>
                 </div>
-                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 card-interactive spotlight-card blur-fade stagger-1">
-                    <div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center mb-5 card-icon">
-                        <i class="ph ph-device-mobile text-xl text-brand"></i>
+                <!-- Big card -->
+                <div class="md:col-span-2 bg-dark-800 border border-white/5 rounded-2xl p-8 card-lift spotlight-card bf d1 flex flex-col justify-between relative overflow-hidden">
+                    <div class="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center"><i class="ph ph-device-mobile text-xl text-brand"></i></div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Apps Mobile</h3>
+                        <p class="text-sm text-dark-200 leading-relaxed max-w-md">Aplicativos nativos e híbridos para iOS e Android integrados com seus sistemas existentes.</p>
                     </div>
-                    <h3 class="text-lg font-semibold text-white mb-2">Apps Mobile</h3>
-                    <p class="text-sm text-dark-200 leading-relaxed">Aplicativos nativos e híbridos para iOS e Android, com foco em usabilidade, performance e integração com seus sistemas existentes.</p>
+                    <div class="absolute right-8 bottom-6 opacity-[.04]"><i class="ph ph-device-mobile" style="font-size:140px"></i></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sobre -->
-    <section id="sobre" class="py-24 px-6 border-t border-white/5">
-        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-            <div class="blur-fade">
-                <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Sobre nós</p>
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">Design funcional aliado à engenharia moderna</h2>
-                <p class="text-dark-200 mb-4 leading-relaxed">Cada projeto é construído do zero. Analisamos a arquitetura da informação, o comportamento do usuário e os objetivos do seu negócio antes de escrever uma linha de código.</p>
-                <p class="text-dark-200 leading-relaxed">Nosso foco está na interseção entre estética visual premium e fluidez técnica — UI, UX e performance entregues juntos.</p>
-                <div class="flex flex-wrap gap-6 mt-8">
-                    <div class="flex items-center gap-2 text-sm text-white">
-                        <i class="ph ph-check-circle text-brand text-lg"></i> Código limpo
-                    </div>
-                    <div class="flex items-center gap-2 text-sm text-white">
-                        <i class="ph ph-check-circle text-brand text-lg"></i> Design exclusivo
-                    </div>
-                    <div class="flex items-center gap-2 text-sm text-white">
-                        <i class="ph ph-check-circle text-brand text-lg"></i> Foco em conversão
-                    </div>
-                </div>
+    <!-- ════════ STATS ════════ -->
+    <section class="py-20 px-6 border-y border-white/5">
+        <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div class="bf">
+                <span class="text-4xl font-bold text-white counter block" data-target="150" data-suffix="+">0</span>
+                <span class="text-xs text-dark-300 uppercase tracking-wider mt-1 block">Projetos</span>
             </div>
-            <div class="grid grid-cols-2 gap-4 blur-fade stagger-1">
-                <div class="bg-dark-800 border border-white/5 rounded-2xl p-6 text-center card-interactive">
-                    <span class="text-3xl font-bold text-white block mb-1 counter" data-target="150" data-suffix="+">0</span>
-                    <span class="text-xs text-dark-300 uppercase tracking-wider">Projetos entregues</span>
+            <div class="bf d1">
+                <span class="text-4xl font-bold text-brand counter block" data-target="99" data-suffix="%">0</span>
+                <span class="text-xs text-dark-300 uppercase tracking-wider mt-1 block">Satisfação</span>
+            </div>
+            <div class="bf d2">
+                <span class="text-4xl font-bold text-white counter block" data-target="5" data-suffix=" anos">0</span>
+                <span class="text-xs text-dark-300 uppercase tracking-wider mt-1 block">No mercado</span>
+            </div>
+            <div class="bf d3">
+                <span class="text-4xl font-bold text-white counter block" data-target="30" data-suffix="+">0</span>
+                <span class="text-xs text-dark-300 uppercase tracking-wider mt-1 block">Clientes ativos</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ PROCESS ════════ -->
+    <section id="processo" class="py-28 px-6">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
+            <div class="bf lg:sticky lg:top-28">
+                <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Como trabalhamos</p>
+                <h2 class="font-display text-3xl md:text-[2.75rem] text-white leading-tight mb-4">Processo claro<br>do início ao deploy.</h2>
+                <p class="text-dark-200 leading-relaxed max-w-sm">Cada projeto segue uma metodologia que garante alinhamento, qualidade e prazos respeitados.</p>
+            </div>
+            <div class="process-line space-y-10">
+                <div class="flex gap-5 bf">
+                    <div class="w-10 h-10 rounded-full bg-brand flex items-center justify-center text-dark-900 font-bold text-sm shrink-0 relative z-10">1</div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-1">Discovery</h3>
+                        <p class="text-sm text-dark-200 leading-relaxed">Entendemos seu negócio, público e objetivos. Definimos escopo, funcionalidades e stack técnico.</p>
+                    </div>
                 </div>
-                <div class="bg-dark-800 border border-white/5 rounded-2xl p-6 text-center card-interactive">
-                    <span class="text-3xl font-bold text-brand block mb-1 counter" data-target="99" data-suffix="%">0</span>
-                    <span class="text-xs text-dark-300 uppercase tracking-wider">Satisfação</span>
+                <div class="flex gap-5 bf d1">
+                    <div class="w-10 h-10 rounded-full bg-brand/20 border border-brand/30 flex items-center justify-center text-brand font-bold text-sm shrink-0 relative z-10">2</div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-1">Design</h3>
+                        <p class="text-sm text-dark-200 leading-relaxed">Wireframes e protótipos interativos no Figma. Você valida antes de qualquer código ser escrito.</p>
+                    </div>
                 </div>
-                <div class="bg-dark-800 border border-white/5 rounded-2xl p-6 text-center col-span-2 card-interactive">
-                    <span class="text-3xl font-bold text-white block mb-1 counter" data-target="5" data-suffix=" anos">0</span>
-                    <span class="text-xs text-dark-300 uppercase tracking-wider">De experiência no mercado</span>
+                <div class="flex gap-5 bf d2">
+                    <div class="w-10 h-10 rounded-full bg-brand/20 border border-brand/30 flex items-center justify-center text-brand font-bold text-sm shrink-0 relative z-10">3</div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-1">Desenvolvimento</h3>
+                        <p class="text-sm text-dark-200 leading-relaxed">Código limpo, responsivo e otimizado. Sprints com entregas parciais para acompanhamento contínuo.</p>
+                    </div>
+                </div>
+                <div class="flex gap-5 bf d3">
+                    <div class="w-10 h-10 rounded-full bg-brand/20 border border-brand/30 flex items-center justify-center text-brand font-bold text-sm shrink-0 relative z-10">4</div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-1">Launch & Suporte</h3>
+                        <p class="text-sm text-dark-200 leading-relaxed">Deploy em produção, testes finais e acompanhamento pós-lançamento com suporte dedicado.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Portfólio -->
-    <section id="portfolio" class="py-24 px-6 border-t border-white/5">
+    <!-- ════════ PORTFOLIO ════════ -->
+    <section id="portfolio" class="py-28 px-6 border-t border-white/5">
         <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 blur-fade">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 bf">
                 <div>
-                    <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Portfólio</p>
-                    <h2 class="text-3xl md:text-4xl font-bold text-white leading-tight">Projetos em destaque</h2>
+                    <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Trabalhos selecionados</p>
+                    <h2 class="font-display text-3xl md:text-[2.75rem] text-white leading-tight">Projetos que entregam resultado.</h2>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <a href="#" class="group blur-fade block">
+                <a href="#" class="group bf block">
                     <div class="overflow-hidden rounded-xl mb-4 bg-dark-800 aspect-[16/10] relative">
                         <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" alt="Dashboard SaaS" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                         <div class="portfolio-overlay">
-                            <span class="text-xs font-medium text-brand uppercase tracking-wider">Ver projeto →</span>
+                            <div>
+                                <span class="text-xs font-medium text-brand uppercase tracking-wider">SaaS Dashboard</span>
+                                <p class="text-white text-sm mt-1">React &middot; Node.js &middot; PostgreSQL</p>
+                            </div>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-1 group-hover:text-brand transition-colors">Nexus Finance</h3>
-                    <p class="text-sm text-dark-300">Dashboard SaaS · React</p>
+                    <p class="text-sm text-dark-300">Painel financeiro com analytics em tempo real</p>
                 </a>
-                <a href="#" class="group blur-fade stagger-1 block">
+                <a href="#" class="group bf d1 block md:mt-12">
                     <div class="overflow-hidden rounded-xl mb-4 bg-dark-800 aspect-[16/10] relative">
                         <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=800&auto=format&fit=crop" alt="App Mobile" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                         <div class="portfolio-overlay">
-                            <span class="text-xs font-medium text-brand uppercase tracking-wider">Ver projeto →</span>
+                            <div>
+                                <span class="text-xs font-medium text-brand uppercase tracking-wider">App Mobile</span>
+                                <p class="text-white text-sm mt-1">Flutter &middot; Firebase &middot; Maps API</p>
+                            </div>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-1 group-hover:text-brand transition-colors">LogisTracker</h3>
-                    <p class="text-sm text-dark-300">App Mobile · Flutter</p>
+                    <p class="text-sm text-dark-300">Rastreamento logístico em tempo real</p>
                 </a>
-                <a href="#" class="group blur-fade block">
+                <a href="#" class="group bf block">
                     <div class="overflow-hidden rounded-xl mb-4 bg-dark-800 aspect-[16/10] relative">
                         <img src="https://images.unsplash.com/photo-1531297172867-4f40136d81ea?q=80&w=800&auto=format&fit=crop" alt="Landing Page" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                         <div class="portfolio-overlay">
-                            <span class="text-xs font-medium text-brand uppercase tracking-wider">Ver projeto →</span>
+                            <div>
+                                <span class="text-xs font-medium text-brand uppercase tracking-wider">Landing Page</span>
+                                <p class="text-white text-sm mt-1">Next.js &middot; Framer Motion &middot; Vercel</p>
+                            </div>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-1 group-hover:text-brand transition-colors">Vortex AI</h3>
-                    <p class="text-sm text-dark-300">Landing Page · Next.js</p>
+                    <p class="text-sm text-dark-300">Landing page para startup de inteligência artificial</p>
                 </a>
-                <a href="#" class="group blur-fade stagger-1 block">
+                <a href="#" class="group bf d1 block md:mt-12">
                     <div class="overflow-hidden rounded-xl mb-4 bg-dark-800 aspect-[16/10] relative">
                         <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop" alt="Plataforma Web" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                         <div class="portfolio-overlay">
-                            <span class="text-xs font-medium text-brand uppercase tracking-wider">Ver projeto →</span>
+                            <div>
+                                <span class="text-xs font-medium text-brand uppercase tracking-wider">Plataforma Web</span>
+                                <p class="text-white text-sm mt-1">Next.js &middot; Prisma &middot; Stripe</p>
+                            </div>
                         </div>
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-1 group-hover:text-brand transition-colors">Quantum Corp</h3>
-                    <p class="text-sm text-dark-300">Plataforma Web · Next.js</p>
+                    <p class="text-sm text-dark-300">Plataforma de gestão empresarial completa</p>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Depoimentos -->
-    <section class="py-24 px-6 border-t border-white/5 bg-dark-800/30 overflow-hidden">
+    <!-- ════════ TESTIMONIALS CAROUSEL ════════ -->
+    <section class="py-28 px-6 border-t border-white/5 bg-dark-800/20 overflow-hidden">
         <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 blur-fade">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 bf">
                 <div>
                     <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Depoimentos</p>
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">O que nossos clientes dizem</h2>
-                    <p class="text-dark-200 mt-3 max-w-md">Relacionamentos construídos com confiança e resultados reais.</p>
+                    <h2 class="font-display text-3xl md:text-[2.75rem] text-white leading-tight">Quem já trabalhou<br>com a gente.</h2>
                 </div>
                 <div class="flex items-center gap-3">
-                    <button id="carousel-prev" class="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-dark-200 hover:border-brand hover:text-brand transition-colors">
-                        <i class="ph ph-arrow-left text-lg"></i>
-                    </button>
-                    <button id="carousel-next" class="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-dark-200 hover:border-brand hover:text-brand transition-colors">
-                        <i class="ph ph-arrow-right text-lg"></i>
-                    </button>
+                    <button id="carousel-prev" class="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-dark-200 hover:border-brand hover:text-brand transition-colors"><i class="ph ph-arrow-left text-lg"></i></button>
+                    <button id="carousel-next" class="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-dark-200 hover:border-brand hover:text-brand transition-colors"><i class="ph ph-arrow-right text-lg"></i></button>
                 </div>
             </div>
-
             <div class="relative" id="carousel-wrapper">
                 <div class="flex gap-6 transition-transform duration-500 ease-out" id="carousel-track">
-                    <!-- Card 1 -->
-                    <div class="carousel-card min-w-[85%] md:min-w-[45%] lg:min-w-[38%] rounded-2xl p-8 transition-all duration-500" data-index="0">
-                        <div class="flex items-center gap-1 mb-4">
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                        </div>
+                    <div class="carousel-card min-w-[85%] md:min-w-[45%] lg:min-w-[38%] rounded-2xl p-8" data-index="0">
+                        <div class="flex items-center gap-1 mb-4"><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i></div>
                         <p class="text-sm leading-relaxed mb-8">"Nossa taxa de conversão subiu 40% após a reestruturação de UX. Entrega rápida, design impecável e comunicação clara do início ao fim."</p>
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center text-xs font-bold text-brand">CM</div>
-                            <div>
-                                <p class="text-sm font-semibold text-white">Carlos Mendes</p>
-                                <p class="text-xs text-dark-300">CEO, TechNova</p>
-                            </div>
-                        </div>
+                        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center text-xs font-bold text-brand">CM</div><div><p class="text-sm font-semibold text-white">Carlos Mendes</p><p class="text-xs text-dark-300">CEO, TechNova</p></div></div>
                     </div>
-                    <!-- Card 2 -->
-                    <div class="carousel-card min-w-[85%] md:min-w-[45%] lg:min-w-[38%] rounded-2xl p-8 transition-all duration-500" data-index="1">
-                        <div class="flex items-center gap-1 mb-4">
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                        </div>
-                        <p class="text-sm leading-relaxed mb-8">"O painel admin transformou nossa operação logística. Código limpo, performance excelente e suporte impecável após o lançamento do sistema."</p>
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center text-xs font-bold text-brand">MS</div>
-                            <div>
-                                <p class="text-sm font-semibold text-white">Mariana Silveira</p>
-                                <p class="text-xs text-dark-300">CTO, LogiFlex</p>
-                            </div>
-                        </div>
+                    <div class="carousel-card min-w-[85%] md:min-w-[45%] lg:min-w-[38%] rounded-2xl p-8" data-index="1">
+                        <div class="flex items-center gap-1 mb-4"><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i></div>
+                        <p class="text-sm leading-relaxed mb-8">"O painel admin transformou nossa operação logística. Código limpo, performance excelente e suporte impecável após o lançamento."</p>
+                        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center text-xs font-bold text-brand">MS</div><div><p class="text-sm font-semibold text-white">Mariana Silveira</p><p class="text-xs text-dark-300">CTO, LogiFlex</p></div></div>
                     </div>
-                    <!-- Card 3 -->
-                    <div class="carousel-card min-w-[85%] md:min-w-[45%] lg:min-w-[38%] rounded-2xl p-8 transition-all duration-500" data-index="2">
-                        <div class="flex items-center gap-1 mb-4">
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                        </div>
-                        <p class="text-sm leading-relaxed mb-8">"O app superou as expectativas. A arquitetura garantiu zero problemas de escala no lançamento e a integração com nossas APIs foi perfeita."</p>
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center text-xs font-bold text-brand">FR</div>
-                            <div>
-                                <p class="text-sm font-semibold text-white">Felipe Ribeiro</p>
-                                <p class="text-xs text-dark-300">Founder, VibeApp</p>
-                            </div>
-                        </div>
+                    <div class="carousel-card min-w-[85%] md:min-w-[45%] lg:min-w-[38%] rounded-2xl p-8" data-index="2">
+                        <div class="flex items-center gap-1 mb-4"><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i></div>
+                        <p class="text-sm leading-relaxed mb-8">"O app superou expectativas. Zero problemas de escala no lançamento e integração perfeita com nossas APIs internas."</p>
+                        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center text-xs font-bold text-brand">FR</div><div><p class="text-sm font-semibold text-white">Felipe Ribeiro</p><p class="text-xs text-dark-300">Founder, VibeApp</p></div></div>
                     </div>
-                    <!-- Card 4 -->
-                    <div class="carousel-card min-w-[85%] md:min-w-[45%] lg:min-w-[38%] rounded-2xl p-8 transition-all duration-500" data-index="3">
-                        <div class="flex items-center gap-1 mb-4">
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                        </div>
-                        <p class="text-sm leading-relaxed mb-8">"A Gaona entregou nosso e-commerce em tempo recorde. A interface ficou intuitiva e as vendas dobraram no primeiro mês após o lançamento."</p>
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center text-xs font-bold text-brand">AL</div>
-                            <div>
-                                <p class="text-sm font-semibold text-white">Ana Luíza Costa</p>
-                                <p class="text-xs text-dark-300">Diretora, ModaViva</p>
-                            </div>
-                        </div>
+                    <div class="carousel-card min-w-[85%] md:min-w-[45%] lg:min-w-[38%] rounded-2xl p-8" data-index="3">
+                        <div class="flex items-center gap-1 mb-4"><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i></div>
+                        <p class="text-sm leading-relaxed mb-8">"Entregaram nosso e-commerce em tempo recorde. Interface intuitiva e as vendas dobraram no primeiro mês após o lançamento."</p>
+                        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center text-xs font-bold text-brand">AL</div><div><p class="text-sm font-semibold text-white">Ana Luíza Costa</p><p class="text-xs text-dark-300">Diretora, ModaViva</p></div></div>
                     </div>
-                    <!-- Card 5 -->
-                    <div class="carousel-card min-w-[85%] md:min-w-[45%] lg:min-w-[38%] rounded-2xl p-8 transition-all duration-500" data-index="4">
-                        <div class="flex items-center gap-1 mb-4">
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                            <i class="ph-fill ph-star text-brand text-sm"></i>
-                        </div>
-                        <p class="text-sm leading-relaxed mb-8">"Profissionalismo do início ao fim. O dashboard que construíram para nós reduziu o tempo de análise de dados em 60%. Recomendo demais."</p>
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center text-xs font-bold text-brand">RT</div>
-                            <div>
-                                <p class="text-sm font-semibold text-white">Rafael Torres</p>
-                                <p class="text-xs text-dark-300">COO, DataPulse</p>
-                            </div>
-                        </div>
+                    <div class="carousel-card min-w-[85%] md:min-w-[45%] lg:min-w-[38%] rounded-2xl p-8" data-index="4">
+                        <div class="flex items-center gap-1 mb-4"><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i><i class="ph-fill ph-star text-brand text-sm"></i></div>
+                        <p class="text-sm leading-relaxed mb-8">"O dashboard reduziu nosso tempo de análise de dados em 60%. Profissionalismo do início ao fim. Recomendo demais."</p>
+                        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-brand/20 flex items-center justify-center text-xs font-bold text-brand">RT</div><div><p class="text-sm font-semibold text-white">Rafael Torres</p><p class="text-xs text-dark-300">COO, DataPulse</p></div></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Planos -->
-    <section id="planos" class="py-24 px-6 border-t border-white/5">
+    <!-- ════════ PRICING ════════ -->
+    <section id="planos" class="py-28 px-6 border-t border-white/5">
         <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16 blur-fade">
-                <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Planos</p>
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Escolha o plano ideal para o seu projeto</h2>
-                <p class="text-dark-200 max-w-lg mx-auto">Pacotes pensados para diferentes estágios do seu negócio. Todos incluem design personalizado e código de alta qualidade.</p>
+            <div class="text-center mb-16 bf">
+                <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Investimento</p>
+                <h2 class="font-display text-3xl md:text-[2.75rem] text-white mb-4">Planos transparentes,<br>sem surpresas.</h2>
+                <p class="text-dark-200 max-w-lg mx-auto">Escolha o pacote ideal para o momento do seu negócio. Todos incluem design exclusivo e código de alta qualidade.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-                <!-- Starter -->
-                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 flex flex-col tilt-card blur-fade stagger-1 relative overflow-hidden">
+                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 flex flex-col tilt-card bf d1">
                     <div class="mb-8">
                         <p class="text-sm text-dark-300 uppercase tracking-wider mb-1">Starter</p>
                         <span class="text-3xl font-bold text-white">R$ 1.497</span>
-                        <p class="text-sm text-dark-300 mt-2">Ideal para validar sua presença online com uma landing page de alta conversão.</p>
+                        <p class="text-sm text-dark-300 mt-2">Landing page de alta conversão para validar sua presença online.</p>
                     </div>
                     <ul class="space-y-3 mb-8 flex-1">
-                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Landing page responsiva</li>
-                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Design UI/UX personalizado</li>
-                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>SEO on-page básico</li>
-                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Entrega em 7 dias</li>
-                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>1 ciclo de revisão</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand"></i>Landing page responsiva</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand"></i>Design UI/UX personalizado</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand"></i>SEO on-page básico</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand"></i>Entrega em 7 dias</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand"></i>1 ciclo de revisão</li>
                     </ul>
-                    <a href="#" class="w-full text-center text-sm font-semibold text-white border border-white/10 rounded-full py-3 hover:border-brand hover:text-brand transition-colors btn-ripple block">
-                        Começar com Starter
-                    </a>
+                    <a href="#" class="w-full text-center text-sm font-semibold text-white border border-white/10 rounded-full py-3 hover:border-brand hover:text-brand transition-colors btn-ripple block">Começar</a>
                 </div>
 
-                <!-- Pro -->
-                <div class="bg-dark-800 border-2 border-brand rounded-2xl p-8 flex flex-col relative tilt-card blur-fade stagger-2">
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand text-dark-900 text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider z-10">
-                        Mais popular
-                    </div>
+                <div class="bg-dark-800 border-2 border-brand rounded-2xl p-8 flex flex-col relative tilt-card bf d2">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand text-dark-900 text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider z-10">Mais popular</div>
                     <div class="mb-8 mt-1">
                         <p class="text-sm text-brand uppercase tracking-wider mb-1">Pro</p>
                         <span class="text-3xl font-bold text-white">R$ 3.997</span>
-                        <p class="text-sm text-dark-300 mt-2">Para empresas que precisam de um site completo com painel de gestão de conteúdo.</p>
+                        <p class="text-sm text-dark-300 mt-2">Site completo com painel admin e gestão de conteúdo.</p>
                     </div>
                     <ul class="space-y-3 mb-8 flex-1">
-                        <li class="flex items-center gap-3 text-sm text-white font-medium"><i class="ph ph-check text-brand text-base"></i>Tudo do plano Starter</li>
-                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Site institucional (até 5 páginas)</li>
-                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Blog dinâmico integrado</li>
-                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Painel admin (CMS)</li>
-                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>SEO avançado</li>
-                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>3 revisões + suporte por 30 dias</li>
+                        <li class="flex items-center gap-3 text-sm text-white font-medium"><i class="ph ph-check text-brand"></i>Tudo do Starter</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand"></i>Site institucional (até 5 pág.)</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand"></i>Blog dinâmico integrado</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand"></i>Painel admin (CMS)</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand"></i>SEO avançado</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand"></i>3 revisões + suporte 30 dias</li>
                     </ul>
-                    <a href="#" class="w-full text-center text-sm font-semibold text-dark-900 bg-brand rounded-full py-3 hover:bg-orange-400 transition-colors btn-ripple shiny-btn block">
-                        Começar com Pro
-                    </a>
+                    <a href="#" class="w-full text-center text-sm font-semibold text-dark-900 bg-brand rounded-full py-3 hover:bg-orange-400 transition-colors btn-ripple shiny-btn block">Começar com Pro</a>
                 </div>
 
-                <!-- Max -->
-                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 flex flex-col tilt-card blur-fade stagger-3 relative overflow-hidden">
+                <div class="bg-dark-800 border border-white/5 rounded-2xl p-8 flex flex-col tilt-card bf d3">
                     <div class="mb-8">
                         <p class="text-sm text-dark-300 uppercase tracking-wider mb-1">Max</p>
                         <span class="text-3xl font-bold text-white">R$ 7.997</span>
-                        <p class="text-sm text-dark-300 mt-2">Solução completa com sistema web customizado, app mobile e infraestrutura escalável.</p>
+                        <p class="text-sm text-dark-300 mt-2">Sistema web/app customizado com infraestrutura escalável.</p>
                     </div>
                     <ul class="space-y-3 mb-8 flex-1">
-                        <li class="flex items-center gap-3 text-sm text-white font-medium"><i class="ph ph-check text-brand text-base"></i>Tudo do plano Pro</li>
-                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Sistema web/app customizado</li>
-                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Dashboard com analytics</li>
-                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Integrações com múltiplas APIs</li>
-                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>App mobile (iOS e Android)</li>
-                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand text-base"></i>Revisões ilimitadas + suporte por 90 dias</li>
+                        <li class="flex items-center gap-3 text-sm text-white font-medium"><i class="ph ph-check text-brand"></i>Tudo do Pro</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand"></i>Sistema web/app customizado</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand"></i>Dashboard com analytics</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand"></i>Integrações com APIs</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand"></i>App mobile (iOS e Android)</li>
+                        <li class="flex items-center gap-3 text-sm text-dark-100"><i class="ph ph-check text-brand"></i>Revisões ilimitadas + 90 dias</li>
                     </ul>
-                    <a href="#" class="w-full text-center text-sm font-semibold text-white border border-white/10 rounded-full py-3 hover:border-brand hover:text-brand transition-colors btn-ripple block">
-                        Solicitar orçamento
-                    </a>
+                    <a href="#" class="w-full text-center text-sm font-semibold text-white border border-white/10 rounded-full py-3 hover:border-brand hover:text-brand transition-colors btn-ripple block">Solicitar orçamento</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA -->
-    <section class="py-24 px-6 border-t border-white/5">
-        <div class="max-w-3xl mx-auto text-center blur-fade">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Pronto para começar seu projeto?</h2>
-            <p class="text-dark-200 mb-8 max-w-lg mx-auto">Entre em contato e receba um orçamento personalizado em até 24 horas. Sem compromisso.</p>
+    <!-- ════════ FAQ ════════ -->
+    <section class="py-28 px-6 border-t border-white/5">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-14 bf">
+                <p class="text-brand text-sm font-medium uppercase tracking-wider mb-3">Dúvidas frequentes</p>
+                <h2 class="font-display text-3xl md:text-[2.75rem] text-white">Perguntas comuns.</h2>
+            </div>
+
+            <div class="space-y-3" id="faq-list">
+                <div class="faq-item border border-white/5 rounded-xl bg-dark-800/50 bf">
+                    <button class="faq-trigger w-full flex items-center justify-between p-5 text-left">
+                        <span class="text-sm font-medium text-white">Qual o prazo médio de entrega?</span>
+                        <i class="ph ph-caret-down text-dark-300 faq-chevron"></i>
+                    </button>
+                    <div class="faq-answer px-5">
+                        <p class="text-sm text-dark-200 leading-relaxed">Depende do escopo. Landing pages levam de 5 a 7 dias. Sites institucionais de 2 a 3 semanas. Sistemas complexos são definidos após o discovery.</p>
+                    </div>
+                </div>
+                <div class="faq-item border border-white/5 rounded-xl bg-dark-800/50 bf d1">
+                    <button class="faq-trigger w-full flex items-center justify-between p-5 text-left">
+                        <span class="text-sm font-medium text-white">Vocês fazem manutenção após a entrega?</span>
+                        <i class="ph ph-caret-down text-dark-300 faq-chevron"></i>
+                    </button>
+                    <div class="faq-answer px-5">
+                        <p class="text-sm text-dark-200 leading-relaxed">Sim. Todos os planos incluem um período de suporte pós-entrega. Após esse período, oferecemos contratos de manutenção mensal sob demanda.</p>
+                    </div>
+                </div>
+                <div class="faq-item border border-white/5 rounded-xl bg-dark-800/50 bf d2">
+                    <button class="faq-trigger w-full flex items-center justify-between p-5 text-left">
+                        <span class="text-sm font-medium text-white">Quais tecnologias vocês utilizam?</span>
+                        <i class="ph ph-caret-down text-dark-300 faq-chevron"></i>
+                    </button>
+                    <div class="faq-answer px-5">
+                        <p class="text-sm text-dark-200 leading-relaxed">React, Next.js, TypeScript, Tailwind CSS, Node.js, Flutter, Firebase, AWS, entre outras. A stack é definida conforme a necessidade do projeto.</p>
+                    </div>
+                </div>
+                <div class="faq-item border border-white/5 rounded-xl bg-dark-800/50 bf d3">
+                    <button class="faq-trigger w-full flex items-center justify-between p-5 text-left">
+                        <span class="text-sm font-medium text-white">Posso acompanhar o progresso do projeto?</span>
+                        <i class="ph ph-caret-down text-dark-300 faq-chevron"></i>
+                    </button>
+                    <div class="faq-answer px-5">
+                        <p class="text-sm text-dark-200 leading-relaxed">Com certeza. Trabalhamos com sprints e entregas parciais. Você tem acesso ao progresso em tempo real e pode dar feedback a cada etapa.</p>
+                    </div>
+                </div>
+                <div class="faq-item border border-white/5 rounded-xl bg-dark-800/50 bf d4">
+                    <button class="faq-trigger w-full flex items-center justify-between p-5 text-left">
+                        <span class="text-sm font-medium text-white">O que preciso fornecer para começar?</span>
+                        <i class="ph ph-caret-down text-dark-300 faq-chevron"></i>
+                    </button>
+                    <div class="faq-answer px-5">
+                        <p class="text-sm text-dark-200 leading-relaxed">Logo, textos, referências visuais e briefing do projeto. Se não tiver isso pronto, ajudamos na construção durante a fase de Discovery.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════ CTA ════════ -->
+    <section class="py-28 px-6 border-t border-white/5 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-brand/[.03] to-transparent pointer-events-none"></div>
+        <div class="max-w-2xl mx-auto text-center relative z-10 bf">
+            <h2 class="font-display text-3xl md:text-5xl text-white mb-5 leading-tight">Vamos construir<br>algo incrível juntos?</h2>
+            <p class="text-dark-200 mb-8 max-w-md mx-auto">Entre em contato e receba um orçamento personalizado em até 24 horas. Sem compromisso.</p>
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="mailto:contato@gaonadesigns.com" class="inline-flex items-center gap-2 text-sm font-semibold text-dark-900 bg-brand px-7 py-3 rounded-full hover:bg-orange-400 transition-colors btn-ripple btn-arrow shiny-btn">
+                <a href="mailto:contato@gaonadesigns.com" class="inline-flex items-center gap-2 text-sm font-semibold text-dark-900 bg-brand px-7 py-3.5 rounded-full hover:bg-orange-400 transition-colors btn-ripple shiny-btn">
                     <i class="ph ph-envelope-simple"></i> Enviar e-mail
                 </a>
-                <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-dark-200 border border-white/10 px-7 py-3 rounded-full hover:border-brand hover:text-brand transition-colors btn-ripple btn-arrow">
+                <a href="#" class="inline-flex items-center gap-2 text-sm font-medium text-dark-200 border border-white/10 px-7 py-3.5 rounded-full hover:border-brand/40 hover:text-white transition-colors btn-ripple">
                     <i class="ph ph-whatsapp-logo"></i> WhatsApp
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="border-t border-white/5 py-12 px-6">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="flex items-center gap-6">
-                <span class="text-sm font-bold text-white">Gaona Designs</span>
-                <div class="flex gap-4">
-                    <a href="#" class="text-dark-300 hover:text-brand transition-colors"><i class="ph-fill ph-instagram-logo text-lg"></i></a>
-                    <a href="#" class="text-dark-300 hover:text-brand transition-colors"><i class="ph-fill ph-linkedin-logo text-lg"></i></a>
-                    <a href="#" class="text-dark-300 hover:text-brand transition-colors"><i class="ph-fill ph-behance-logo text-lg"></i></a>
+    <!-- ════════ FOOTER ════════ -->
+    <footer class="border-t border-white/5 pt-16 pb-8 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div class="md:col-span-2">
+                    <a href="#" class="text-xl font-bold text-white tracking-tight font-display inline-block mb-4">gaona<span class="text-brand">.</span></a>
+                    <p class="text-dark-300 text-sm max-w-xs leading-relaxed">Design e engenharia digital para empresas que levam resultado a sério.</p>
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-semibold mb-4">Navegação</h4>
+                    <ul class="space-y-2 text-sm text-dark-300">
+                        <li><a href="#servicos" class="hover:text-white transition-colors">Serviços</a></li>
+                        <li><a href="#processo" class="hover:text-white transition-colors">Processo</a></li>
+                        <li><a href="#portfolio" class="hover:text-white transition-colors">Trabalhos</a></li>
+                        <li><a href="#planos" class="hover:text-white transition-colors">Planos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-semibold mb-4">Contato</h4>
+                    <ul class="space-y-2 text-sm text-dark-300">
+                        <li class="text-brand">contato@gaonadesigns.com</li>
+                        <li><a href="#" class="hover:text-white transition-colors">Instagram</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">LinkedIn</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Behance</a></li>
+                    </ul>
                 </div>
             </div>
-            <p class="text-xs text-dark-400">&copy; 2024 Gaona Designs. Todos os direitos reservados.</p>
+            <div class="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-dark-400">&copy; 2024 Gaona Designs. Todos os direitos reservados.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-dark-400 hover:text-brand transition-colors"><i class="ph-fill ph-instagram-logo text-lg"></i></a>
+                    <a href="#" class="text-dark-400 hover:text-brand transition-colors"><i class="ph-fill ph-linkedin-logo text-lg"></i></a>
+                    <a href="#" class="text-dark-400 hover:text-brand transition-colors"><i class="ph-fill ph-behance-logo text-lg"></i></a>
+                </div>
+            </div>
         </div>
     </footer>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded',()=>{
 
-        // ── Blur Fade Reveal (Magic UI) ──
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-        document.querySelectorAll('.blur-fade').forEach(el => observer.observe(el));
+        // ── Blur Fade ──
+        const obs=new IntersectionObserver(e=>{e.forEach(n=>{if(n.isIntersecting){n.target.classList.add('active');obs.unobserve(n.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+        document.querySelectorAll('.bf,.line-reveal').forEach(el=>obs.observe(el));
 
-        // ── Custom Cursor ──
-        const dot = document.getElementById('cursor-dot');
-        const ring = document.getElementById('cursor-ring');
-        let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+        // ── Cursor ──
+        const dot=document.getElementById('cursor-dot'),ring=document.getElementById('cursor-ring');
+        let mx=0,my=0,rx=0,ry=0;
+        document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.transform=`translate(${mx-4}px,${my-4}px)`});
+        (function aR(){rx+=(mx-rx)*.15;ry+=(my-ry)*.15;ring.style.transform=`translate(${rx-18}px,${ry-18}px)`;requestAnimationFrame(aR)})();
+        document.querySelectorAll('a,button,.card-lift,.tilt-card,.carousel-card,.faq-trigger').forEach(el=>{el.addEventListener('mouseenter',()=>ring.classList.add('hover'));el.addEventListener('mouseleave',()=>ring.classList.remove('hover'))});
+        document.addEventListener('mouseleave',()=>{dot.style.opacity='0';ring.style.opacity='0'});
+        document.addEventListener('mouseenter',()=>{dot.style.opacity='1';ring.style.opacity='1'});
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX; mouseY = e.clientY;
-            dot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
-        });
+        // ── Ripple ──
+        document.querySelectorAll('.btn-ripple').forEach(b=>{b.addEventListener('click',function(e){const r=this.getBoundingClientRect(),s=document.createElement('span');s.className='rpl';const z=Math.max(r.width,r.height);s.style.width=s.style.height=z+'px';s.style.left=(e.clientX-r.left-z/2)+'px';s.style.top=(e.clientY-r.top-z/2)+'px';this.appendChild(s);s.addEventListener('animationend',()=>s.remove())})});
 
-        function animateRing() {
-            ringX += (mouseX - ringX) * 0.15;
-            ringY += (mouseY - ringY) * 0.15;
-            ring.style.transform = `translate(${ringX - 18}px, ${ringY - 18}px)`;
-            requestAnimationFrame(animateRing);
-        }
-        animateRing();
-
-        const interactives = document.querySelectorAll('a, button, .card-interactive, .tilt-card, .testimonial-card');
-        interactives.forEach(el => {
-            el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-            el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
-        });
-
-        document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
-        document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '1'; });
-
-        // ── Button Ripple ──
-        document.querySelectorAll('.btn-ripple').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                const rect = this.getBoundingClientRect();
-                const ripple = document.createElement('span');
-                ripple.className = 'ripple-effect';
-                const size = Math.max(rect.width, rect.height);
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
-                ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
-                this.appendChild(ripple);
-                ripple.addEventListener('animationend', () => ripple.remove());
-            });
-        });
-
-        // ── Animated Counters ──
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                const el = entry.target;
-                const target = parseInt(el.dataset.target);
-                const suffix = el.dataset.suffix || '';
-                let current = 0;
-                const step = Math.max(1, Math.floor(target / 40));
-                const interval = setInterval(() => {
-                    current += step;
-                    if (current >= target) { current = target; clearInterval(interval); }
-                    el.textContent = current + suffix;
-                }, 30);
-                counterObserver.unobserve(el);
-            });
-        }, { threshold: 0.5 });
-        document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+        // ── Counters ──
+        const cObs=new IntersectionObserver(e=>{e.forEach(n=>{if(!n.isIntersecting)return;const el=n.target,t=parseInt(el.dataset.target),sf=el.dataset.suffix||'';let c=0;const st=Math.max(1,Math.floor(t/40)),iv=setInterval(()=>{c+=st;if(c>=t){c=t;clearInterval(iv)}el.textContent=c+sf},30);cObs.unobserve(el)})},{threshold:.5});
+        document.querySelectorAll('.counter').forEach(el=>cObs.observe(el));
 
         // ── Spotlight Cards ──
-        document.querySelectorAll('.spotlight-card').forEach(card => {
-            card.addEventListener('mousemove', function(e) {
-                const rect = this.getBoundingClientRect();
-                this.style.setProperty('--spotlight-x', (e.clientX - rect.left) + 'px');
-                this.style.setProperty('--spotlight-y', (e.clientY - rect.top) + 'px');
-            });
-        });
+        document.querySelectorAll('.spotlight-card').forEach(c=>{c.addEventListener('mousemove',function(e){const r=this.getBoundingClientRect();this.style.setProperty('--sx',(e.clientX-r.left)+'px');this.style.setProperty('--sy',(e.clientY-r.top)+'px')})});
 
-        // ── Pricing Card Tilt ──
-        document.querySelectorAll('.tilt-card').forEach(card => {
-            card.addEventListener('mousemove', function(e) {
-                const rect = this.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -4;
-                const rotateY = ((x - centerX) / centerX) * 4;
-                this.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px)`;
-            });
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
-            });
-        });
+        // ── Tilt ──
+        document.querySelectorAll('.tilt-card').forEach(c=>{c.addEventListener('mousemove',function(e){const r=this.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,cx=r.width/2,cy=r.height/2;this.style.transform=`perspective(800px) rotateX(${((y-cy)/cy)*-3}deg) rotateY(${((x-cx)/cx)*3}deg) translateY(-2px)`});c.addEventListener('mouseleave',function(){this.style.transform='perspective(800px) rotateX(0) rotateY(0) translateY(0)'})});
 
-        // ── Testimonial Carousel ──
-        const track = document.getElementById('carousel-track');
-        const cards = document.querySelectorAll('.carousel-card');
-        const prevBtn = document.getElementById('carousel-prev');
-        const nextBtn = document.getElementById('carousel-next');
-        let currentSlide = 0;
+        // ── Carousel ──
+        const track=document.getElementById('carousel-track'),cards=document.querySelectorAll('.carousel-card'),prev=document.getElementById('carousel-prev'),next=document.getElementById('carousel-next');
+        let cur=0;
+        function upd(){cards.forEach((c,i)=>c.classList.toggle('active',i===cur));const a=cards[cur];if(a&&track)track.style.transform=`translateX(-${a.offsetLeft}px)`}
+        if(prev&&next){next.addEventListener('click',()=>{cur=(cur+1)%cards.length;upd()});prev.addEventListener('click',()=>{cur=(cur-1+cards.length)%cards.length;upd()});upd()}
 
-        function updateCarousel() {
-            cards.forEach((card, i) => {
-                card.classList.toggle('active', i === currentSlide);
-            });
-            // Calculate offset: move track so active card is at start
-            const activeCard = cards[currentSlide];
-            if (activeCard && track) {
-                const trackRect = track.getBoundingClientRect();
-                const cardRect = activeCard.getBoundingClientRect();
-                const offset = activeCard.offsetLeft;
-                track.style.transform = `translateX(-${offset}px)`;
-            }
-        }
+        // ── FAQ Accordion ──
+        document.querySelectorAll('.faq-trigger').forEach(btn=>{btn.addEventListener('click',function(){const item=this.closest('.faq-item');document.querySelectorAll('.faq-item').forEach(i=>{if(i!==item)i.classList.remove('open')});item.classList.toggle('open')})});
 
-        if (prevBtn && nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                currentSlide = (currentSlide + 1) % cards.length;
-                updateCarousel();
-            });
-            prevBtn.addEventListener('click', () => {
-                currentSlide = (currentSlide - 1 + cards.length) % cards.length;
-                updateCarousel();
-            });
-            updateCarousel();
-        }
-
-        // ── Gradient Bars Background ──
-        const barsContainer = document.getElementById('gradient-bars');
-        const NUM_BARS = 9;
-        const GRADIENT_FROM = 'rgba(255, 107, 44, 0.35)';
-        const GRADIENT_TO = 'transparent';
-        const ANIMATION_DURATION = 2;
-
-        function calculateBarHeight(index, total) {
-            const position = index / (total - 1);
-            const center = 0.5;
-            const distanceFromCenter = Math.abs(position - center);
-            return 30 + 70 * Math.pow(distanceFromCenter * 2, 1.2);
-        }
-
-        for (let i = 0; i < NUM_BARS; i++) {
-            const bar = document.createElement('div');
-            bar.className = 'gradient-bar';
-            const height = calculateBarHeight(i, NUM_BARS);
-            bar.style.cssText = `
-                flex: 1 0 calc(100% / ${NUM_BARS});
-                max-width: calc(100% / ${NUM_BARS});
-                background: linear-gradient(to top, ${GRADIENT_FROM}, ${GRADIENT_TO});
-                transform: scaleY(${height / 100});
-                animation: pulseBar ${ANIMATION_DURATION}s ease-in-out infinite alternate;
-                animation-delay: ${i * 0.1}s;
-                --initial-scale: ${height / 100};
-                outline: 1px solid rgba(0, 0, 0, 0);
-                box-sizing: border-box;
-            `;
-            barsContainer.appendChild(bar);
-        }
+        // ── Gradient Bars ──
+        const bc=document.getElementById('gradient-bars');
+        for(let i=0;i<9;i++){const b=document.createElement('div');b.className='gradient-bar';const p=i/8,d=Math.abs(p-.5),h=30+70*Math.pow(d*2,1.2);b.style.cssText=`flex:1 0 calc(100%/9);max-width:calc(100%/9);background:linear-gradient(to top,rgba(255,107,44,.3),transparent);transform:scaleY(${h/100});animation:pulseBar 2s ease-in-out infinite alternate;animation-delay:${i*.1}s;--is:${h/100};outline:1px solid rgba(0,0,0,0)`;bc.appendChild(b)}
     });
     </script>
 </body>
